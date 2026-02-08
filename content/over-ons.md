@@ -1,31 +1,51 @@
 ---
-title: "Over Ons"
+title: "Over ons"
 date: 2026-02-08
 ---
 
-## Over het ALK Zwolle Netwerk
+## Over het ALK Netwerk Kinderfysiotherapie
 
-Het ALK Zwolle netwerk is opgericht met als doel om de zorg voor patiënten met Aanhoudende Lichamelijke Klachten te verbeteren door middel van onderzoek, samenwerking en kennisdeling.
+Het ALK Netwerk Kinderfysiotherapie is een netwerk van gespecialiseerde kinderfysiotherapeuten in Nederland die zich richten op kinderen en jongeren met aanhoudende lichamelijke klachten (ALK).
+
+## Onze Missie
+
+Wij willen kinderen en jongeren met aanhoudende lichamelijke klachten de beste zorg bieden door:
+- Toegang te bieden tot gespecialiseerde kinderfysiotherapie
+- Kennis en ervaring te delen tussen professionals
+- Gezinnen te ondersteunen in hun zoektocht naar passende hulp
+- Bij te dragen aan het welzijn en de ontwikkeling van kinderen met ALK
 
 ## Onze Visie
 
-Wij geloven in een integrale benadering van aanhoudende lichamelijke klachten, waarbij lichamelijke, psychologische en sociale factoren in samenhang worden bekeken. Door verschillende disciplines samen te brengen, kunnen we patiënten de beste zorg bieden.
+Wij geloven in een integrale benadering waarbij het kind centraal staat. Aanhoudende lichamelijke klachten hebben invloed op alle aspecten van het leven van een kind: lichamelijk, psychisch, sociaal en op school. Door deze factoren in samenhang te bekijken en te behandelen, kunnen we kinderen het beste helpen.
 
-## Onze Aanpak
+## Doelstellingen
 
-### Multidisciplinair
-Ons netwerk bestaat uit artsen, psychologen, fysiotherapeuten en andere zorgprofessionals die nauw samenwerken.
+### Voor kinderen en gezinnen
+- Toegang bieden tot kwalitatief goede, gespecialiseerde kinderfysiotherapie
+- Verminderen van klachten en verbeteren van het dagelijks functioneren
+- Ondersteuning bij het hervinden van plezier in bewegen en spel
+- Versterken van de veerkracht van het kind en het gezin
 
-### Evidence-based
-Wij baseren onze behandelingen op wetenschappelijk onderzoek en best practices uit binnen- en buitenland.
+### Voor professionals
+- Netwerk van ervaren kinderfysiotherapeuten opbouwen
+- Delen van kennis en best practices
+- Samenwerking bevorderen met andere zorgverleners
+- Blijven ontwikkelen van evidence-based behandelmethoden
 
-### Patiëntgericht
-De ervaring en behoeften van patiënten staan centraal in alles wat wij doen.
+### Voor de zorg
+- Kwaliteit van zorg voor kinderen met ALK verbeteren
+- Bewustwording vergroten over aanhoudende lichamelijke klachten bij kinderen
+- Bijdragen aan wetenschappelijk onderzoek
+- Verkorting van wachttijden door efficiënte samenwerking
 
 ## Samenwerking
 
-Wij werken samen met:
-- Isala Ziekenhuis Zwolle
-- Universitair Medisch Centrum Groningen
-- Verschillende huisartsenpraktijken in de regio
-- Regionale GGZ-instellingen
+Het ALK Netwerk werkt nauw samen met:
+- Huisartsen en kinderartsen
+- Psychologen en GGZ-professionals
+- Scholen en schoolbegeleidingsdiensten
+- Andere paramedische disciplines
+- Ouder- en patiëntenorganisaties
+
+Door deze samenwerking kunnen we kinderen en hun gezinnen optimaal ondersteunen.

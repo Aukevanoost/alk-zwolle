@@ -1,11 +1,11 @@
 baseURL = 'https://alk-zwolle.nl/'
 languageCode = 'nl'
-title = 'ALK Zwolle - Netwerk Aanhoudende Lichamelijke Klachten'
+title = 'ALK Netwerk Kinderfysiotherapie'
 theme = 'alk-theme'
 
 [params]
-  description = 'Netwerk voor onderzoek en behandeling van Aanhoudende Lichamelijke Klachten in Zwolle'
-  author = 'ALK Zwolle'
+  description = 'ALK Netwerk voor Kinderfysiotherapie - Hulp bij aanhoudende lichamelijke klachten'
+  author = 'ALK Netwerk'
 
 [menu]
   [[menu.main]]
@@ -13,18 +13,14 @@ theme = 'alk-theme'
     url = '/'
     weight = 1
   [[menu.main]]
-    name = 'Over Ons'
-    url = '/over-ons/'
+    name = 'Bij welke klachten'
+    url = '/bij-welke-klachten/'
     weight = 2
   [[menu.main]]
-    name = 'Onderzoek'
-    url = '/onderzoek/'
+    name = 'Over ons'
+    url = '/over-ons/'
     weight = 3
   [[menu.main]]
-    name = 'Team'
-    url = '/team/'
+    name = 'Zoek een kinderfysiotherapeut'
+    url = '/zoek-kinderfysiotherapeut/'
     weight = 4
-  [[menu.main]]
-    name = 'Contact'
-    url = '/contact/'
-    weight = 5

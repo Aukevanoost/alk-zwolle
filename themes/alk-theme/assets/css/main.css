@@ -1,4 +1,4 @@
-/* ALK Zwolle Theme - Main Stylesheet */
+/* ALK Netwerk Kinderfysiotherapie Theme - Main Stylesheet */
 
 /* CSS Reset and Base Styles */
 * {
@@ -8,16 +8,17 @@
 }
 
 :root {
-    /* Color scheme inspired by health and research */
-    --primary-color: #2c5aa0;
-    --secondary-color: #4a90e2;
-    --accent-color: #6ab04c;
+    /* Color scheme from ALK logo */
+    --primary-color: #2E3B7C;      /* Navy blue from logo */
+    --secondary-color: #E05563;     /* Red from logo */
+    --accent-color: #6FC5C3;        /* Teal/cyan from logo */
+    --accent-orange: #F78B5B;       /* Orange from logo */
     --text-color: #333333;
     --text-light: #666666;
     --bg-color: #ffffff;
     --bg-light: #f8f9fa;
     --border-color: #e0e0e0;
-    --footer-bg: #1a3a5c;
+    --footer-bg: #2E3B7C;
 }
 
 html {
@@ -39,15 +40,11 @@ body {
     padding: 0 20px;
 }
 
-/* Header Styles */
+/* Header Styles - Simpler, cleaner */
 header {
     background-color: var(--bg-color);
-    border-bottom: 2px solid var(--primary-color);
-    padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    padding: 1.5rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 header .container {
@@ -58,21 +55,21 @@ header .container {
 }
 
 header h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--primary-color);
     margin: 0;
     font-weight: 600;
 }
 
-/* Navigation Styles */
+/* Navigation Styles - Simpler */
 nav {
-    margin-top: 0.5rem;
+    margin-top: 0;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 0.5rem;
+    gap: 2rem;
     flex-wrap: wrap;
 }
 
@@ -82,177 +79,153 @@ nav ul li {
 
 nav ul li a {
     display: block;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
     color: var(--text-color);
     text-decoration: none;
-    border-radius: 4px;
-    transition: all 0.3s ease;
     font-weight: 500;
+    transition: color 0.3s ease;
+    border-bottom: 2px solid transparent;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-    background-color: var(--primary-color);
-    color: white;
+    color: var(--primary-color);
+    border-bottom-color: var(--accent-color);
 }
 
 /* Main Content Styles */
 main {
     min-height: calc(100vh - 400px);
-    padding: 2rem 0;
 }
 
-/* Home Page Hero Section */
+/* Home Page Hero Section - Simpler, more elegant */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
     color: white;
-    padding: 4rem 0;
+    padding: 5rem 0;
     text-align: center;
     margin-bottom: 3rem;
-    border-radius: 8px;
 }
 
 .hero h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     margin-bottom: 1rem;
     font-weight: 700;
+    line-height: 1.2;
 }
 
 .hero p {
-    font-size: 1.2rem;
-    max-width: 800px;
+    font-size: 1.3rem;
+    max-width: 700px;
     margin: 0 auto;
     opacity: 0.95;
+    line-height: 1.5;
 }
 
-/* Content Sections */
+/* Content Sections - Cleaner */
 .content-section {
     margin-bottom: 3rem;
+    padding: 0 1rem;
 }
 
 .content-section h2 {
     color: var(--primary-color);
     font-size: 2rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 3px solid var(--accent-color);
-    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .content-section h3 {
     color: var(--text-color);
     font-size: 1.5rem;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
 }
 
 .content-section p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     line-height: 1.8;
     color: var(--text-light);
+    font-size: 1.05rem;
 }
 
-/* Cards */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.card {
+/* Simple Info Boxes instead of cards */
+.info-box {
     background: var(--bg-light);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid var(--accent-color);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border-radius: 4px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.card h3 {
+.info-box h3 {
     color: var(--primary-color);
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
-.card p {
-    color: var(--text-light);
-}
-
-/* Team Members */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.team-member {
-    text-align: center;
-    padding: 1.5rem;
-    background: var(--bg-light);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.team-member h3 {
-    color: var(--primary-color);
+.info-box p {
     margin-bottom: 0.5rem;
-}
-
-.team-member .role {
-    color: var(--text-light);
-    font-style: italic;
-    margin-bottom: 1rem;
 }
 
 /* Lists */
 ul, ol {
     margin-left: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     color: var(--text-light);
+    line-height: 1.7;
 }
 
 /* Links */
 a {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     text-decoration: none;
 }
 
 a:hover {
+    color: var(--secondary-color);
     text-decoration: underline;
-    color: var(--primary-color);
 }
 
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--primary-color);
+    padding: 0.9rem 2rem;
+    background-color: var(--accent-orange);
     color: white;
-    border-radius: 4px;
+    border-radius: 6px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover {
     background-color: var(--secondary-color);
     text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+    background-color: var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
 }
 
 /* Footer Styles */
 footer {
     background-color: var(--footer-bg);
     color: white;
-    padding: 2rem 0;
+    padding: 2.5rem 0;
     margin-top: 4rem;
 }
 
@@ -280,13 +253,17 @@ footer a:hover {
         align-items: flex-start;
     }
     
+    header h1 {
+        margin-bottom: 1rem;
+    }
+    
     nav {
         width: 100%;
     }
     
     nav ul {
         flex-direction: column;
-        gap: 0;
+        gap: 0.5rem;
     }
     
     nav ul li {
@@ -295,7 +272,11 @@ footer a:hover {
     
     nav ul li a {
         display: block;
-        padding: 0.75rem 1rem;
+        padding: 0.75rem 0;
+    }
+    
+    .hero {
+        padding: 3rem 0;
     }
     
     .hero h1 {
@@ -303,11 +284,11 @@ footer a:hover {
     }
     
     .hero p {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .content-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
 }
 

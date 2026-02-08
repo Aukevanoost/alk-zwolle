@@ -3,17 +3,17 @@ title: "Home"
 date: 2026-02-08
 ---
 
-## Wat zijn Aanhoudende Lichamelijke Klachten?
+## Welkom bij het ALK Netwerk Kinderfysiotherapie
 
-Aanhoudende Lichamelijke Klachten (ALK) zijn lichamelijke symptomen die langer dan drie maanden aanhouden en waarvoor geen duidelijke medische verklaring gevonden wordt. Deze klachten kunnen verschillende vormen aannemen zoals chronische vermoeidheid, pijn, duizeligheid of spijsverteringsproblemen.
+Het ALK Netwerk is er voor kinderen met aanhoudende lichamelijke klachten. Wij verbinden gespecialiseerde kinderfysiotherapeuten die ervaring hebben met het behandelen van langdurige klachten waar geen duidelijke medische verklaring voor is.
 
-## Ons Netwerk
+## Wat doen wij?
 
-Het ALK Zwolle netwerk is een samenwerkingsverband van zorgprofessionals en onderzoekers die zich richten op de behandeling en het onderzoek van aanhoudende lichamelijke klachten. Wij bieden een multidisciplinaire aanpak waarbij verschillende specialismen samenwerken.
+Het ALK Netwerk biedt ondersteuning aan kinderen en jongeren die last hebben van aanhoudende lichamelijke klachten. Door samen te werken met ervaren kinderfysiotherapeuten in heel Nederland, helpen we gezinnen om de juiste hulp te vinden.
 
-## Onze Doelstellingen
+### Onze aanpak
 
-- **Onderzoek**: Wetenschappelijk onderzoek naar de oorzaken en behandelmogelijkheden van ALK
-- **Behandeling**: Bieden van evidence-based behandelingen voor patiënten met ALK
-- **Samenwerking**: Stimuleren van kennisdeling tussen zorgverleners
-- **Voorlichting**: Vergroten van bewustwording over ALK bij patiënten en professionals
+- Gespecialiseerde kinderfysiotherapie voor aanhoudende klachten
+- Samenwerking met andere zorgverleners
+- Evidence-based behandelmethoden
+- Ondersteuning voor het hele gezin
