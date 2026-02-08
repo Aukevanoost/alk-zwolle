@@ -1,0 +1,15 @@
+name = 'ALK Theme'
+license = 'MIT'
+description = 'Custom theme for ALK Zwolle - Netwerk Aanhoudende Lichamelijke Klachten'
+
+# The home page of the theme
+homepage = 'https://github.com/Aukevanoost/alk-zwolle'
+
+# Taxonomy terms
+tags = ['research', 'healthcare', 'medical', 'responsive']
+features = ['responsive', 'modern-design', 'dutch-language', 'accessible']
+
+# Theme author
+[author]
+  name = 'ALK Zwolle'
+  homepage = 'https://alk-zwolle.nl'
