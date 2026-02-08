@@ -1,31 +1,15 @@
-name = 'Theme name'
+name = 'ALK Theme'
 license = 'MIT'
-licenselink = 'https://github.com/owner/repo/LICENSE'
-description = 'Theme description'
+description = 'Custom theme for ALK Zwolle - Netwerk Aanhoudende Lichamelijke Klachten'
 
-# The home page of the theme, where the source can be found
-homepage = 'https://github.com/owner/repo'
-
-# If you have a running demo of the theme
-demosite = 'https://owner.github.io/repo'
+# The home page of the theme
+homepage = 'https://github.com/Aukevanoost/alk-zwolle'
 
 # Taxonomy terms
-tags = ['blog', 'company']
-features = ['some', 'awesome', 'features']
+tags = ['research', 'healthcare', 'medical', 'responsive']
+features = ['responsive', 'modern-design', 'dutch-language', 'accessible']
 
-# If the theme has multiple authors
-authors = [
-  {name = 'Name of author', homepage = 'Website of author'},
-  {name = 'Name of author', homepage = 'Website of author'}
-]
-
-# If the theme has a single author
+# Theme author
 [author]
-  name = 'Your name'
-  homepage = 'Your website'
-
-# If porting an existing theme
-[original]
-  author = 'Name of original author'
-  homepage = 'Website of original author'
-  repo = 'https://github.com/owner/repo'
+  name = 'ALK Zwolle'
+  homepage = 'https://alk-zwolle.nl'
