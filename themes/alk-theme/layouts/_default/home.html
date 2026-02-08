@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="container">
+  <div class="hero">
+    <h1>Welkom bij ALK Zwolle</h1>
+    <p>Netwerk voor onderzoek en behandeling van Aanhoudende Lichamelijke Klachten</p>
+  </div>
+
+  <div class="content-section">
+    {{ .Content }}
+  </div>
+
+  {{ if site.RegularPages }}
+  <div class="content-section">
+    <h2>Recente Updates</h2>
+    <div class="card-grid">
+      {{ range first 6 site.RegularPages }}
+      <div class="card">
+        <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+        {{ .Summary }}
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

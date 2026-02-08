@@ -1,0 +1,30 @@
+baseURL = 'https://alk-zwolle.nl/'
+languageCode = 'nl'
+title = 'ALK Zwolle - Netwerk Aanhoudende Lichamelijke Klachten'
+theme = 'alk-theme'
+
+[params]
+  description = 'Netwerk voor onderzoek en behandeling van Aanhoudende Lichamelijke Klachten in Zwolle'
+  author = 'ALK Zwolle'
+
+[menu]
+  [[menu.main]]
+    name = 'Home'
+    url = '/'
+    weight = 1
+  [[menu.main]]
+    name = 'Over Ons'
+    url = '/over-ons/'
+    weight = 2
+  [[menu.main]]
+    name = 'Onderzoek'
+    url = '/onderzoek/'
+    weight = 3
+  [[menu.main]]
+    name = 'Team'
+    url = '/team/'
+    weight = 4
+  [[menu.main]]
+    name = 'Contact'
+    url = '/contact/'
+    weight = 5
