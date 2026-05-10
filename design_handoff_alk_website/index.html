@@ -1,0 +1,1481 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ALK Netwerk Kinderfysiotherapie — Regio Zwolle</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Public+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <style>
+      :root {
+        --bg: #fafbfc;
+        --bg-alt: #f1f3f6;
+        --bg-warm: #ffffff;
+        --bg-card: #ffffff;
+        --ink: #1a1944;
+        --ink-soft: #4a4a6e;
+        --ink-mute: #7d7f95;
+        --rule: #dadde3;
+        --rule-cool: #d3d7dd;
+        --rule-warm: #dadde3;
+        --accent: #2d2c7b;
+        --accent-soft: #e2e1ee;
+        --accent-ink: #2d2c7b;
+        --brand-navy: #2d2c7b;
+        --brand-teal: #56c2b1;
+        --brand-orange: #f58242;
+        --brand-coral: #d84a4a;
+        --warm: #f58242;
+        --radius: 10px;
+        --maxw: 1180px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          "Public Sans",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.55;
+        font-size: 17px;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Source Serif 4", Georgia, serif;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        margin: 0;
+        text-wrap: balance;
+      }
+      h1 {
+        font-size: clamp(40px, 5.4vw, 64px);
+        line-height: 1.05;
+      }
+      h2 {
+        font-size: clamp(28px, 3.2vw, 38px);
+        line-height: 1.15;
+      }
+      h3 {
+        font-size: 22px;
+        line-height: 1.25;
+      }
+      p {
+        margin: 0 0 1em;
+        color: var(--ink-soft);
+        text-wrap: pretty;
+      }
+      a {
+        color: var(--accent-ink);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+      }
+      a:hover {
+        color: var(--accent);
+      }
+
+      /* ---- layout ---- */
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+      section {
+        padding: 96px 0;
+        border-top: 1px solid var(--rule);
+      }
+      section:first-of-type {
+        border-top: 0;
+      }
+      .eyebrow {
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-ink);
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      /* ---- top nav ---- */
+      header.top {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: #ffffff;
+        border-bottom: 1px solid var(--rule);
+      }
+      .top .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 84px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--ink);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .brand img {
+        height: 56px;
+        width: auto;
+        display: block;
+        color: var(--ink);
+      }
+      .brand .brand-text {
+        display: none;
+      }
+      footer .brand img {
+        height: 64px;
+      }
+      nav ul {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      nav a {
+        color: var(--ink-soft);
+        text-decoration: none;
+        font-size: 15px;
+        padding: 6px 0;
+        border-bottom: 1.5px solid transparent;
+      }
+      nav a:hover {
+        color: var(--ink);
+        border-bottom-color: var(--accent);
+      }
+
+      /* ---- hero ---- */
+      .hero {
+        padding: 120px 0 110px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 64px;
+        align-items: end;
+      }
+      .hero h1 {
+        margin-bottom: 24px;
+      }
+      .hero .lede {
+        font-size: 21px;
+        line-height: 1.5;
+        color: var(--ink-soft);
+        max-width: 36ch;
+      }
+      .hero-card {
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 32px;
+      }
+      .hero-card h3 {
+        margin-bottom: 14px;
+        font-size: 18px;
+      }
+      .hero-card ul {
+        padding-left: 18px;
+        margin: 0;
+        color: var(--ink-soft);
+      }
+      .hero-card li {
+        margin-bottom: 10px;
+      }
+      .cta-row {
+        display: flex;
+        gap: 14px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 22px;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 500;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition:
+          transform 0.12s ease,
+          background 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn.primary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn.primary:hover {
+        background: var(--accent-ink);
+        color: #fff;
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--ink);
+        border-color: var(--rule);
+      }
+      .btn.ghost:hover {
+        border-color: var(--accent);
+        color: var(--accent-ink);
+      }
+      .btn .arr {
+        display: inline-block;
+        transition: transform 0.15s ease;
+      }
+      .btn:hover .arr {
+        transform: translateX(3px);
+      }
+
+      /* ---- two-col ---- */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 72px;
+        align-items: start;
+      }
+      .two-col .label-col h2 {
+        margin-bottom: 12px;
+      }
+      .two-col .label-col .eyebrow {
+        margin-bottom: 14px;
+      }
+      .two-col .body-col p {
+        font-size: 18px;
+      }
+      .two-col .body-col p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ---- audience cards ---- */
+      .audience {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 40px;
+      }
+      .aud-card {
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 36px;
+      }
+      .aud-card .tag {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-ink);
+        background: var(--accent-soft);
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin-bottom: 18px;
+        font-weight: 600;
+      }
+      .aud-card h3 {
+        margin-bottom: 12px;
+      }
+      .aud-card p {
+        margin: 0;
+      }
+
+      /* ---- "wat is ALK" symptoms ---- */
+      .symptom-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-top: 36px;
+      }
+      .symptom {
+        background: var(--bg-card);
+        border: 1px solid var(--rule-cool);
+        border-radius: var(--radius);
+        padding: 22px 18px;
+        text-align: center;
+        font-size: 15px;
+        color: var(--ink);
+        font-weight: 500;
+      }
+
+      /* ---- approach: bio-psycho-social ---- */
+      .bps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .bps-card {
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 32px;
+        position: relative;
+        border-top: 3px solid var(--bps-accent, var(--accent));
+      }
+      .bps-card.bio {
+        --bps-accent: var(--brand-orange);
+      }
+      .bps-card.psy {
+        --bps-accent: var(--brand-teal);
+      }
+      .bps-card.soc {
+        --bps-accent: var(--brand-coral);
+      }
+      .bps-card .num {
+        font-family: "Source Serif 4", serif;
+        font-size: 13px;
+        color: var(--bps-accent, var(--accent-ink));
+        font-weight: 600;
+        margin-bottom: 18px;
+        letter-spacing: 0.06em;
+      }
+      .bps-card h3 {
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+      .bps-card p {
+        font-size: 15px;
+        margin: 0;
+      }
+
+      /* ---- werkwijze ---- */
+      .werk-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .werk-card {
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 28px;
+      }
+      .werk-card .num {
+        font-family: "Source Serif 4", serif;
+        font-size: 36px;
+        color: var(--brand-teal);
+        line-height: 1;
+        margin-bottom: 18px;
+        font-weight: 500;
+      }
+      .werk-card h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      .werk-card p {
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      .lid-block {
+        margin-top: 32px;
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 48px;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .lid-info h3 {
+        font-size: 24px;
+        margin: 6px 0 16px;
+      }
+      .lid-info p {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+      .lid-info p:last-child {
+        margin-bottom: 0;
+      }
+      .lid-meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        border-left: 1px solid var(--rule);
+        padding-left: 48px;
+      }
+      .meta-item .meta-num {
+        font-family: "Source Serif 4", serif;
+        font-size: 38px;
+        line-height: 1;
+        color: var(--brand-orange);
+        margin-bottom: 8px;
+      }
+      .meta-item .meta-label {
+        font-size: 12px;
+        color: var(--ink-mute);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        line-height: 1.3;
+      }
+
+      /* ---- map section ---- */
+      #specialisten {
+        background: var(--bg-alt);
+      }
+      .map-shell {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        overflow: hidden;
+        height: 640px;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+        background: #e8e6e0;
+      }
+      .leaflet-container {
+        font-family: "Public Sans", sans-serif;
+      }
+      .pop-name {
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--ink);
+        margin-bottom: 4px;
+        font-family: "Source Serif 4", serif;
+      }
+      .pop-loc {
+        font-size: 12px;
+        color: var(--ink-mute);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .pop-row {
+        font-size: 13px;
+        color: var(--ink-soft);
+        margin: 3px 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .pop-row a {
+        color: var(--accent-ink);
+      }
+
+      .specialist-list {
+        border-left: 1px solid var(--rule);
+        overflow-y: auto;
+        background: var(--bg-card);
+      }
+      .filter-bar {
+        position: sticky;
+        top: 0;
+        padding: 16px 20px;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--rule);
+        z-index: 2;
+      }
+      .filter-bar input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      .filter-bar input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: var(--bg-card);
+      }
+      .filter-meta {
+        font-size: 12px;
+        color: var(--ink-mute);
+        margin-top: 8px;
+        letter-spacing: 0.04em;
+      }
+      .sp-item {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--rule);
+        cursor: pointer;
+        transition: background 0.12s ease;
+      }
+      .sp-item:hover {
+        background: var(--bg-alt);
+      }
+      .sp-item.active {
+        background: var(--accent-soft);
+      }
+      .sp-name {
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 2px;
+        font-size: 15px;
+      }
+      .sp-place {
+        font-size: 12px;
+        color: var(--accent-ink);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .sp-meta {
+        font-size: 13px;
+        color: var(--ink-soft);
+        margin: 2px 0;
+        word-break: break-word;
+      }
+      .sp-meta a {
+        color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .sp-meta a:hover {
+        color: var(--accent);
+        text-decoration: underline;
+      }
+
+      /* custom marker */
+      .alk-marker {
+        width: 28px;
+        height: 28px;
+        border-radius: 50% 50% 50% 0;
+        background: var(--accent);
+        border: 2px solid #fff;
+        transform: rotate(-45deg);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .alk-marker::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: #fff;
+        border-radius: 50%;
+      }
+
+      /* ---- links section ---- */
+      .links-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 36px;
+      }
+      .link-card {
+        background: var(--bg-card);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 32px;
+      }
+      .link-card h3 {
+        margin-bottom: 18px;
+        font-size: 19px;
+      }
+      .link-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .link-card li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--rule);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .link-card li:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .link-card li:first-child {
+        padding-top: 0;
+      }
+      .link-card .lt-label {
+        font-size: 14px;
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .link-card a {
+        font-size: 13px;
+        color: var(--ink-mute);
+        text-decoration: none;
+        word-break: break-all;
+      }
+      .link-card a:hover {
+        color: var(--accent);
+      }
+
+      /* ---- footer ---- */
+      footer {
+        border-top: 1px solid var(--rule);
+        padding: 56px 0 64px;
+        background: var(--bg-alt);
+      }
+      footer .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 32px;
+      }
+      footer p {
+        font-size: 14px;
+        margin: 0;
+        color: var(--ink-mute);
+      }
+      footer .brand {
+        font-size: 16px;
+      }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        .hero-grid,
+        .two-col {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+        .audience,
+        .links-grid,
+        .bps {
+          grid-template-columns: 1fr;
+        }
+        .werk-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .lid-block {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding: 32px;
+        }
+        .lid-meta {
+          border-left: 0;
+          border-top: 1px solid var(--rule);
+          padding-left: 0;
+          padding-top: 24px;
+        }
+        .symptom-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .map-shell {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+        #map {
+          height: 420px;
+        }
+        .specialist-list {
+          max-height: 480px;
+          border-left: 0;
+          border-top: 1px solid var(--rule);
+        }
+        nav ul {
+          display: none;
+        }
+        section {
+          padding: 64px 0;
+        }
+        .hero {
+          padding: 64px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap row">
+        <a href="#" class="brand" aria-label="ALK Netwerk Kinderfysiotherapie">
+          <img src="logo.svg" alt="ALK Netwerk Kinderfysiotherapie" />
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#over-ons">Over ons</a></li>
+            <li><a href="#wat-is-alk">Wat is ALK?</a></li>
+            <li><a href="#aanpak">Aanpak</a></li>
+            <li><a href="#werkwijze">Werkwijze</a></li>
+            <li><a href="#specialisten">Vind een specialist</a></li>
+            <li><a href="#links">Educatie</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Regio Zwolle en omstreken</div>
+          <h1>Kinderfysiotherapie bij Aanhoudende Lichamelijke Klachten.</h1>
+          <p class="lede">
+            Een kennisnetwerk van gespecialiseerde kinderfysiotherapeuten die
+            kinderen en jongeren met ALK helpen om grip te krijgen op hun
+            klachten — en weer ruimte vinden in het dagelijks leven.
+          </p>
+          <div class="cta-row">
+            <a href="#specialisten" class="btn primary"
+              >Vind een specialist <span class="arr">→</span></a
+            >
+            <a href="#wat-is-alk" class="btn ghost">Wat is ALK?</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Voor wie">
+          <h3>Het netwerk is er voor</h3>
+          <ul>
+            <li>
+              Kinderen en jongeren met ALK die belemmeringen ervaren in hun
+              dagelijkse activiteiten.
+            </li>
+            <li>
+              Verwijzers — huisartsen en specialisten — die een ervaren
+              kinderfysiotherapeut zoeken.
+            </li>
+            <li>
+              Ouders en verzorgers die op zoek zijn naar gerichte begeleiding.
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- OVER ONS -->
+    <section id="over-ons">
+      <div class="wrap two-col">
+        <div class="label-col">
+          <div class="eyebrow">Over ons</div>
+          <h2>Een kennisnetwerk dat blijft leren.</h2>
+        </div>
+        <div class="body-col">
+          <p>
+            Het ALK netwerk kinderfysiotherapie is een kennisnetwerk van
+            kinderfysiotherapeuten die zich gespecialiseerd hebben in de
+            behandeling van kinderen en jongeren met aanhoudende lichamelijke
+            klachten.
+          </p>
+          <p>
+            We werken aan continue verbetering van de zorg door bij- en
+            nascholingen te volgen, samen te werken met andere betrokkenen —
+            hulpverleners, school, sport en gezin — en actuele wetenschappelijke
+            ontwikkelingen op het gebied van ALK te volgen. We bespreken
+            casuïstiek met elkaar en leren zo van elkaars ervaring.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="audience">
+          <article class="aud-card">
+            <span class="tag">Voor kinderen &amp; ouders</span>
+            <h3>Begeleiding op maat</h3>
+            <p>
+              Heeft je kind langdurige klachten die het dagelijks leven
+              verstoren? De therapeuten in dit netwerk hebben specifieke kennis
+              van ALK en helpen om weer in beweging te komen.
+            </p>
+          </article>
+          <article class="aud-card">
+            <span class="tag">Voor verwijzers</span>
+            <h3>Gericht doorverwijzen</h3>
+            <p>
+              Als huisarts of specialist kunt u via dit netwerk gericht een
+              kinderfysiotherapeut vinden met aantoonbare ervaring in de
+              behandeling van ALK bij kinderen en jongeren.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAT IS ALK -->
+    <section id="wat-is-alk" style="background: var(--bg-alt)">
+      <div class="wrap two-col">
+        <div class="label-col">
+          <div class="eyebrow">Wat is ALK?</div>
+          <h2>Klachten die lang duren en het leven beïnvloeden.</h2>
+        </div>
+        <div class="body-col">
+          <p>
+            ALK staat voor <strong>Aanhoudende Lichamelijke Klachten</strong> —
+            klachten die weken of maanden duren en veel invloed hebben op het
+            dagelijks leven, ook als er geen duidelijke medische oorzaak voor te
+            vinden is, of als een bestaande ziekte het niet helemaal verklaart.
+          </p>
+          <p>
+            Het gaat om reële klachten met een reële impact. Ze passen vaak niet
+            in één hokje, en juist daarom is een brede, gespecialiseerde blik
+            belangrijk.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="eyebrow" style="margin-top: 56px">
+          Veelvoorkomende klachten
+        </div>
+        <div class="symptom-grid">
+          <div class="symptom">Vermoeidheid</div>
+          <div class="symptom">Hoofdpijn</div>
+          <div class="symptom">Spier- &amp; gewrichtspijn</div>
+          <div class="symptom">Buikpijn</div>
+          <div class="symptom">Duizeligheid</div>
+          <div class="symptom">Hartkloppingen</div>
+          <div class="symptom">Uitvalsverschijnselen</div>
+          <div class="symptom">Concentratieproblemen</div>
+          <div class="symptom">Slaapproblemen</div>
+          <div class="symptom">Verminderde belastbaarheid</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AANPAK -->
+    <section id="aanpak">
+      <div class="wrap two-col">
+        <div class="label-col">
+          <div class="eyebrow">Onze aanpak</div>
+          <h2>Een bio-psychosociale blik.</h2>
+        </div>
+        <div class="body-col">
+          <p>
+            Bij ALK kijken we naar allerlei factoren die invloed kunnen hebben
+            op de ernst en duur van de klachten. We zoeken aanknopingspunten om
+            de klachten te begrijpen — en vooral: hoe de impact van de klacht op
+            het dagelijkse leven verminderd kan worden.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="bps">
+          <article class="bps-card bio">
+            <div class="num">01 — BIOLOGISCH</div>
+            <h3>Lichamelijke factoren</h3>
+            <p>
+              We onderzoeken hoe het lichaam functioneert: belasting, beweging,
+              houding, kracht en herstel. Wat houdt klachten in stand en wat
+              geeft juist ruimte?
+            </p>
+          </article>
+          <article class="bps-card psy">
+            <div class="num">02 — PSYCHOLOGISCH</div>
+            <h3>Gedachten &amp; gevoelens</h3>
+            <p>
+              Spanning, gedachten over de klacht en hoe iemand erop reageert
+              spelen vaak een rol. We brengen deze patronen in kaart en werken
+              met passende strategieën.
+            </p>
+          </article>
+          <article class="bps-card soc">
+            <div class="num">03 — SOCIAAL</div>
+            <h3>Omgeving &amp; context</h3>
+            <p>
+              School, sport, gezin en vriendenkring beïnvloeden hoe een klacht
+              zich ontwikkelt. We betrekken de omgeving zodat de aanpak houdbaar
+              is in het echte leven.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WERKWIJZE / HOE WE WERKEN -->
+    <section id="werkwijze" style="background: var(--bg-warm)">
+      <div class="wrap two-col">
+        <div class="label-col">
+          <div class="eyebrow">Werkwijze</div>
+          <h2>Hoe we kennis bouwen en delen.</h2>
+        </div>
+        <div class="body-col">
+          <p>
+            Het netwerk is bedoeld voor kinderfysiotherapeuten in het
+            adherentiegebied van Isala Zwolle die de zorg voor kinderen en
+            jongeren met ALK willen optimaliseren — door actuele kennis,
+            gezamenlijke visie en collegiale uitwisseling.
+          </p>
+          <p>
+            Ons doel is uniformiteit van behandeling op basis van de laatste
+            bewezen effectieve interventies, en het verdiepen en verbreden van
+            kennis binnen de groep.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="werk-grid">
+          <article class="werk-card">
+            <div class="num">01</div>
+            <h3>Drie bijeenkomsten per jaar</h3>
+            <p>
+              Fysieke avonden afwisselend met een spreker, casuïstiekbespreking,
+              vaardigheidstraining en het delen van vragen en ervaringen.
+            </p>
+          </article>
+          <article class="werk-card">
+            <div class="num">02</div>
+            <h3>Gedeeld behandelprotocol</h3>
+            <p>
+              Een gezamenlijk opgesteld protocol vormt de basis van behandeling.
+              Aangevuld met incompany-cursussen en kennisdeling vanuit gevolgde
+              scholingen.
+            </p>
+          </article>
+          <article class="werk-card">
+            <div class="num">03</div>
+            <h3>Continue kennisuitwisseling</h3>
+            <p>
+              Tussen de bijeenkomsten door delen we wetenschappelijke updates
+              per mail en via een gezamenlijke Dropbox die voor alle leden
+              toegankelijk is.
+            </p>
+          </article>
+          <article class="werk-card">
+            <div class="num">04</div>
+            <h3>Collegiale consultatie</h3>
+            <p>
+              Leden kunnen elkaar raadplegen bij complexe casuïstiek. Sprekers
+              met expertkennis worden uitgenodigd om hun expertise te delen.
+            </p>
+          </article>
+        </div>
+
+        <div class="lid-block">
+          <div class="lid-info">
+            <div class="eyebrow" style="color: var(--ink-mute)">
+              Lidmaatschap
+            </div>
+            <h3>Aansluiten bij het netwerk</h3>
+            <p>
+              Iedere kinderfysiotherapeut die kinderen en jongeren met ALK
+              begeleidt en werkzaam is in het adherentiegebied van Isala kan lid
+              worden. Collega's kunnen door de leden worden aangedragen.
+              Structurele aanwezigheid wordt gevraagd.
+            </p>
+            <p>
+              De organisatie ligt bij een voorzitter — werkzaam in Isala — met
+              een kerngroep daaromheen.
+            </p>
+          </div>
+          <div class="lid-meta">
+            <div class="meta-item">
+              <div class="meta-num">€25</div>
+              <div class="meta-label">Jaarlijkse contributie</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-num">3×</div>
+              <div class="meta-label">Bijeenkomsten per jaar</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-num">22</div>
+              <div class="meta-label">Aangesloten therapeuten</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIALISTEN -->
+    <section id="specialisten" style="background: var(--bg-alt)">
+      <div class="wrap two-col">
+        <div class="label-col">
+          <div class="eyebrow">Vind een specialist</div>
+          <h2>22 kinderfysiotherapeuten in de regio.</h2>
+        </div>
+        <div class="body-col">
+          <p>
+            Klik op een marker op de kaart of zoek in de lijst op naam of
+            plaats. Elke therapeut in het netwerk heeft specifieke kennis en
+            ervaring met de behandeling van ALK bij kinderen en jongeren.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="map-shell" role="region" aria-label="Specialistenkaart">
+          <div id="map" aria-label="Kaart met locaties van specialisten"></div>
+          <div class="specialist-list" id="splist">
+            <div class="filter-bar">
+              <input
+                id="filter"
+                type="search"
+                placeholder="Zoek op naam of plaats…"
+                aria-label="Filter specialisten"
+              />
+              <div class="filter-meta" id="filterMeta">22 specialisten</div>
+            </div>
+            <div id="spitems"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section id="links" style="background: var(--bg-warm)">
+      <div class="wrap two-col">
+        <div class="label-col">
+          <div class="eyebrow">Educatie</div>
+          <h2>Interessante links.</h2>
+        </div>
+        <div class="body-col">
+          <p>
+            Bronnen die ouders, kinderen en verwijzers helpen om meer te
+            begrijpen over pijn, hoofdpijn en hoe het zenuwstelsel klachten in
+            stand kan houden.
+          </p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="links-grid">
+          <article class="link-card">
+            <h3>Educatie over pijn</h3>
+            <ul>
+              <li>
+                <span class="lt-label"
+                  >Podcast — Wat is pijn? Voor de jonge patiënt</span
+                >
+                <a
+                  href="https://www.henw.org/podcast/wat-pijn-een-podcast-voor-de-jonge-patient"
+                  target="_blank"
+                  rel="noopener"
+                  >henw.org · Pijn-podcast</a
+                >
+              </li>
+              <li>
+                <span class="lt-label">Filmpje — Educatie over pijn</span>
+                <a
+                  href="https://www.youtube.com/watch?v=UznY5Nry6VY"
+                  target="_blank"
+                  rel="noopener"
+                  >YouTube · UznY5Nry6VY</a
+                >
+              </li>
+              <li>
+                <span class="lt-label">Filmpje — Struggle switch</span>
+                <a
+                  href="https://www.youtube.com/watch?v=rCp1l16GCXI"
+                  target="_blank"
+                  rel="noopener"
+                  >YouTube · rCp1l16GCXI</a
+                >
+              </li>
+              <li>
+                <span class="lt-label">Filmpje — Neuroplasticiteit</span>
+                <a
+                  href="https://www.youtube.com/watch?v=vFSq9welUWg"
+                  target="_blank"
+                  rel="noopener"
+                  >YouTube · vFSq9welUWg</a
+                >
+              </li>
+            </ul>
+          </article>
+          <article class="link-card">
+            <h3>Hoofdpijn</h3>
+            <ul>
+              <li>
+                <span class="lt-label">Hoofdpijn bij kinderen — folder</span>
+                <a
+                  href="http://www.isala.nl/patienten/folders/7208-hoofdpijn-bij-kinderen-behandeling-en-leefregels"
+                  target="_blank"
+                  rel="noopener"
+                  >isala.nl · Folder 7208</a
+                >
+              </li>
+              <li>
+                <span class="lt-label">Headache Relief Guide</span>
+                <a
+                  href="https://www.headachereliefguide.com"
+                  target="_blank"
+                  rel="noopener"
+                  >headachereliefguide.com</a
+                >
+              </li>
+              <li>
+                <span class="lt-label">Alles over hoofdpijn</span>
+                <a
+                  href="https://www.allesoverhoofdpijn.be"
+                  target="_blank"
+                  rel="noopener"
+                  >allesoverhoofdpijn.be</a
+                >
+              </li>
+              <li>
+                <span class="lt-label">Migraine — how it works (EN)</span>
+                <a
+                  href="https://www.youtube.com/watch?v=bJs50wrv704"
+                  target="_blank"
+                  rel="noopener"
+                  >YouTube · bJs50wrv704</a
+                >
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap row">
+        <a href="#" class="brand" aria-label="ALK Netwerk Kinderfysiotherapie">
+          <img src="logo.svg" alt="ALK Netwerk Kinderfysiotherapie" />
+        </a>
+        <p>
+          © 2026 ALK Regio Zwolle en omstreken<br />Kennisnetwerk voor
+          gespecialiseerde kinderfysiotherapie
+        </p>
+        <p>Kaartdata © OpenStreetMap-bijdragers</p>
+      </div>
+    </footer>
+
+    <script>
+      // ----- specialist data -----
+      const SPECIALISTS = [
+        {
+          name: "Janette Buwalda",
+          phone: "088-6248861",
+          email: "J.G.Buwalda@Isala.nl",
+          website: "www.Isala.nl",
+          url: "https://www.isala.nl",
+          place: "Zwolle",
+          coords: [52.5172, 6.0834],
+        },
+        {
+          name: "Linda van Petersen",
+          phone: "088-6242305",
+          email: "A.G.van.Petersen@Isala.nl",
+          website: "www.Isala.nl",
+          url: "https://www.isala.nl",
+          place: "Zwolle",
+          coords: [52.5164, 6.0826],
+        },
+        {
+          name: "Leonie Scholten",
+          phone: "06-23861408",
+          email: "leonie@kinderfysiolee.nl",
+          website: "www.KinderfysioLee.nl",
+          url: "https://www.kinderfysiolee.nl",
+          place: "Hattem en Wapenveld",
+          coords: [52.4747, 6.0667],
+        },
+        {
+          name: "Mirjam van der Sleen",
+          phone: "088-1290133",
+          email: "m.m.vandersleen@treant.nl",
+          website: "www.treant.nl",
+          url: "https://www.treant.nl/zorg/ziekenhuiszorg/specialismen-en-afdelingen/kinder--en-jeugdrevalidatie",
+          place: "Emmen, Hoogeveen en Stadskanaal",
+          coords: [52.7858, 6.8978],
+        },
+        {
+          name: "Karin Schiphorst",
+          phone: "088-6242305",
+          email: "k.f.j.schiphorst@isala.nl",
+          website: "www.Isala.nl",
+          url: "https://www.isala.nl",
+          place: "Zwolle",
+          coords: [52.5168, 6.083],
+        },
+        {
+          name: "Hanneke Rouw",
+          phone: "088-6242305",
+          email: "h.rouw@isala.nl",
+          website: "www.Isala.nl",
+          url: "https://www.isala.nl",
+          place: "Zwolle",
+          coords: [52.5176, 6.0838],
+        },
+        {
+          name: "Nynke van der Meulen",
+          phone: "088-6242305",
+          email: "N.C.van.der.Meulen@Isala.nl",
+          website: "www.Isala.nl",
+          url: "https://www.isala.nl",
+          place: "Zwolle",
+          coords: [52.516, 6.0822],
+        },
+        {
+          name: "Elise Onvlee",
+          phone: "038-4530191",
+          email: "e.onvlee@kinderfysioderegge.nl",
+          website: "www.Kinderfysioderegge.nl",
+          url: "https://www.kinderfysioderegge.nl",
+          place: "Zwolle",
+          coords: [52.5128, 6.0938],
+        },
+        {
+          name: "Janita Ebeke",
+          phone: "038-4530191",
+          email: "j.ebeke@kinderfysioderegge.nl",
+          website: "www.Kinderfysioderegge.nl",
+          url: "https://www.kinderfysioderegge.nl",
+          place: "Zwolle",
+          coords: [52.5132, 6.0942],
+        },
+        {
+          name: "Gabrielle Koster",
+          phone: "038-4535503",
+          email: "g.koster@fysiopluszwolle.nl",
+          website: "www.Fysiopluszwolle.nl",
+          url: "https://www.fysiopluszwolle.nl",
+          place: "Zwolle",
+          coords: [52.5208, 6.079],
+        },
+
+        {
+          name: "Vrony de Jong",
+          phone: "038-3320041",
+          email: "vrony@kinderfysiokampen.nl",
+          website: "www.Kinderfysiokampen.nl",
+          url: "https://www.kinderfysiokampen.nl",
+          place: "Kampen",
+          coords: [52.555, 5.9111],
+        },
+        {
+          name: "Marijke Nooter",
+          phone: "038-3311350",
+          email: "m.nooter@goedzorgfysiotherapie.nl",
+          website: "www.goedzorgfysiotherapie.nl",
+          url: "https://www.goedzorgfysiotherapie.nl",
+          place: "Hasselt en Zwartsluis",
+          coords: [52.5944, 6.0944],
+        },
+        {
+          name: "Marlou Eilders",
+          phone: "038-3311350",
+          email: "m.eilders@goedzorgfysiotherapie.nl",
+          website: "www.goedzorgfysiotherapie.nl",
+          url: "https://www.goedzorgfysiotherapie.nl",
+          place: "Hasselt, Genemuiden en IJsselmuiden",
+          coords: [52.63, 6.05],
+        },
+        {
+          name: "Ingrid Timmerhuis",
+          phone: "0529-431609",
+          email: "I.Timmerhuis@fysiotherapiedalfsen.nl",
+          website: "www.fysiotherapiedalfsen.nl",
+          url: "https://www.fysiotherapiedalfsen.nl",
+          place: "Dalfsen",
+          coords: [52.5103, 6.2547],
+        },
+        {
+          name: "Anneke Broersma",
+          phone: "0529-431609",
+          email: "a.broersma@fysiotherapiedalfsen.nl",
+          website: "www.fysiotherapiedalfsen.nl",
+          url: "https://www.fysiotherapiedalfsen.nl",
+          place: "Dalfsen",
+          coords: [52.5108, 6.2551],
+        },
+        {
+          name: "Sandra Luten",
+          phone: "0522-244242",
+          email: "sandraluten@de-kinderpraktijk.nl",
+          website: "www.de-kinderpraktijk.nl",
+          url: "https://www.de-kinderpraktijk.nl",
+          place: "Meppel",
+          coords: [52.6953, 6.1944],
+        },
+        {
+          name: "Marjon Potkamp",
+          phone: "0521-342083",
+          email: "Info@praktijkkinderfysio.nl",
+          website: "www.praktijkfysio.nl",
+          url: "https://www.praktijkfysio.nl",
+          place: "Havelte / Wolvega / Steenwijk",
+          coords: [52.7717, 6.24],
+        },
+        {
+          name: "Linette Straatsma",
+          phone: "038-4204737",
+          email: "linette@moor-kids.nl",
+          website: "www.moor-kids.nl",
+          url: "https://www.moor-kids.nl",
+          place: "Emmeloord",
+          coords: [52.7117, 5.7472],
+        },
+        {
+          name: "Sanne-Belle van der Reest",
+          phone: "0527-785916",
+          email: "info@vitanovaemmeloord.nl",
+          website: "www.vitanovaemmeloord.nl",
+          url: "https://www.vitanovaemmeloord.nl",
+          place: "Emmeloord",
+          coords: [52.7121, 5.7476],
+        },
+        {
+          name: "Kirsha Kamphuis",
+          phone: "0578-696363",
+          email: "kirsha@fysioheerde.nl",
+          website: "www.fysioheerde.nl",
+          url: "https://www.fysioheerde.nl",
+          place: "Heerde",
+          coords: [52.3922, 6.0367],
+        },
+        {
+          name: "Thomas Post",
+          phone: "0578-696363",
+          email: "thomas@fysioheerde.nl",
+          website: "www.fysioheerde.nl",
+          url: "https://www.fysioheerde.nl",
+          place: "Heerde",
+          coords: [52.3926, 6.0371],
+        },
+        {
+          name: "Joanne Scherpbier",
+          phone: "06-19511924",
+          email: "info@oneofakind-kinderfysiotherapie.nl",
+          website: "www.oneofakind-kinderfysiotherapie.nl",
+          url: "https://www.oneofakind-kinderfysiotherapie.nl",
+          place: "Nunspeet",
+          coords: [52.3792, 5.7822],
+        },
+      ];
+
+      // ----- map setup -----
+      const map = L.map("map", {
+        scrollWheelZoom: false,
+        zoomControl: true,
+      }).setView([52.53, 6.15], 9);
+
+      // PDOK / Kadaster BRT-Achtergrondkaart (open data)
+      L.tileLayer(
+        "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png",
+        {
+          attribution:
+            'Kaart: <a href="https://www.kadaster.nl/" target="_blank" rel="noopener">Kadaster</a> / <a href="https://www.pdok.nl/" target="_blank" rel="noopener">PDOK</a> — BRT-Achtergrondkaart',
+          minZoom: 6,
+          maxZoom: 19,
+        },
+      ).addTo(map);
+
+      // enable wheel zoom on click
+      map.on("click", () => map.scrollWheelZoom.enable());
+      map.on("mouseout", () => map.scrollWheelZoom.disable());
+
+      const alkIcon = L.divIcon({
+        className: "alk-marker-wrap",
+        html: '<div class="alk-marker"></div>',
+        iconSize: [28, 28],
+        iconAnchor: [14, 26],
+        popupAnchor: [0, -22],
+      });
+
+      const markers = [];
+      SPECIALISTS.forEach((s, i) => {
+        const m = L.marker(s.coords, { icon: alkIcon }).addTo(map);
+        const popup = `
+      <div class="pop-name">${s.name}</div>
+      <div class="pop-loc">${s.place}</div>
+      <div class="pop-row">📞 <a href="tel:${s.phone.replace(/[^0-9+]/g, "")}">${s.phone}</a></div>
+      <div class="pop-row">✉ <a href="mailto:${s.email}">${s.email}</a></div>
+      <div class="pop-row">🌐 <a href="${s.url}" target="_blank" rel="noopener">${s.website}</a></div>
+    `;
+        m.bindPopup(popup, { className: "alk-popup" });
+        markers.push({ marker: m, data: s, idx: i });
+      });
+
+      // fit bounds
+      const group = L.featureGroup(markers.map((x) => x.marker));
+      map.fitBounds(group.getBounds().pad(0.18));
+
+      // ----- list rendering -----
+      const itemsEl = document.getElementById("spitems");
+      const filterEl = document.getElementById("filter");
+      const metaEl = document.getElementById("filterMeta");
+
+      function renderList(query = "") {
+        const q = query.trim().toLowerCase();
+        itemsEl.innerHTML = "";
+        let count = 0;
+        SPECIALISTS.forEach((s, i) => {
+          const hay = (s.name + " " + s.place).toLowerCase();
+          if (q && !hay.includes(q)) return;
+          count++;
+          const div = document.createElement("div");
+          div.className = "sp-item";
+          div.dataset.idx = i;
+          div.innerHTML = `
+        <div class="sp-name">${s.name}</div>
+        <div class="sp-place">${s.place}</div>
+        <div class="sp-meta"><a href="tel:${s.phone.replace(/[^0-9+]/g, "")}">${s.phone}</a></div>
+        <div class="sp-meta"><a href="mailto:${s.email}">${s.email}</a></div>
+        <div class="sp-meta"><a href="${s.url}" target="_blank" rel="noopener">${s.website}</a></div>
+      `;
+          div.addEventListener("click", (e) => {
+            // don't hijack actual link clicks
+            if (e.target.tagName === "A") return;
+            const idx = +div.dataset.idx;
+            const m = markers[idx].marker;
+            map.setView(markers[idx].data.coords, 12, { animate: true });
+            m.openPopup();
+            document
+              .querySelectorAll(".sp-item")
+              .forEach((el) => el.classList.remove("active"));
+            div.classList.add("active");
+          });
+          itemsEl.appendChild(div);
+        });
+        metaEl.textContent =
+          count === SPECIALISTS.length
+            ? `${count} specialisten`
+            : `${count} van ${SPECIALISTS.length} specialisten`;
+      }
+
+      renderList();
+      filterEl.addEventListener("input", (e) => renderList(e.target.value));
+
+      // smooth scroll for nav
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const id = a.getAttribute("href");
+          if (id.length < 2) return;
+          const target = document.querySelector(id);
+          if (target) {
+            e.preventDefault();
+            const y =
+              target.getBoundingClientRect().top + window.pageYOffset - 60;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
