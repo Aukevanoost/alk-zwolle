@@ -634,10 +634,11 @@
         margin-top: 36px;
       }
       .link-card {
+        --card-pad: 32px;
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
-        padding: 32px;
+        padding: var(--card-pad);
       }
       .link-card h3 {
         margin-bottom: 18px;
@@ -646,34 +647,44 @@
       .link-card ul {
         list-style: none;
         padding: 0;
-        margin: 0;
+        /* cancels the first/last row's own padding so the card keeps its
+           32px inner spacing */
+        margin: -14px 0;
       }
-      .link-card li {
-        padding: 12px 0;
+      .link-card li:not(:last-child) .link-row {
         border-bottom: 1px solid var(--rule);
+      }
+      /* the whole row is the link -- bled out to the card edges so the hover
+         surface matches what you can click */
+      .link-row {
         display: flex;
         flex-direction: column;
         gap: 4px;
+        padding: 14px var(--card-pad);
+        margin: 0 calc(-1 * var(--card-pad));
+        text-decoration: none;
+        transition: background-color 0.15s ease;
       }
-      .link-card li:last-child {
-        border-bottom: 0;
-        padding-bottom: 0;
+      .link-row:hover {
+        background: var(--bg-alt);
       }
-      .link-card li:first-child {
-        padding-top: 0;
+      .link-row:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: -2px;
+        border-radius: 4px;
       }
       .link-card .lt-label {
         font-size: 14px;
         color: var(--ink);
         font-weight: 500;
       }
-      .link-card a {
+      .link-card .lt-src {
         font-size: 13px;
         color: var(--ink-mute);
-        text-decoration: none;
         word-break: break-all;
       }
-      .link-card a:hover {
+      .link-row:hover .lt-label,
+      .link-row:hover .lt-src {
         color: var(--accent);
       }
 
@@ -829,11 +840,9 @@
             klachten.
           </p>
           <p>
-            We werken aan continue verbetering van de zorg door bij- en
-            nascholingen te volgen, samen te werken met andere betrokkenen —
-            hulpverleners, school, sport en gezin — en actuele wetenschappelijke
-            ontwikkelingen op het gebied van ALK te volgen. We bespreken
-            casuïstiek met elkaar en leren zo van elkaars ervaring.
+            Er wordt continu gewerkt aan optimalisatie van de zorg door
+            scholing. Er wordt zonodig samengewerkt met andere betrokken
+            hulpverleners, school, sport en gezin.
           </p>
         </div>
       </div>
@@ -841,8 +850,7 @@
       <div class="wrap">
         <div class="audience">
           <article class="aud-card">
-            <span class="tag">Voor kinderen &amp; ouders</span>
-            <h3>Begeleiding op maat</h3>
+            <h3>Voor kinderen &amp; ouders</h3>
             <p>
               Heeft je kind langdurige klachten die het dagelijks leven
               verstoren? De therapeuten in dit netwerk hebben specifieke kennis
@@ -850,12 +858,11 @@
             </p>
           </article>
           <article class="aud-card">
-            <span class="tag">Voor verwijzers</span>
-            <h3>Gericht doorverwijzen</h3>
+            <h3>Voor verwijzers</h3>
             <p>
               Als huisarts of specialist kunt u via dit netwerk gericht een
-              kinderfysiotherapeut vinden met aantoonbare ervaring in de
-              behandeling van ALK bij kinderen en jongeren.
+              kinderfysiotherapeut vinden met ervaring in de behandeling van ALK
+              bij kinderen en jongeren.
             </p>
           </article>
         </div>
@@ -873,8 +880,9 @@
           <p>
             ALK staat voor <strong>Aanhoudende Lichamelijke Klachten</strong> —
             klachten die weken of maanden duren en veel invloed hebben op het
-            dagelijks leven, ook als er geen duidelijke medische oorzaak voor te
-            vinden is, of als een bestaande ziekte het niet helemaal verklaart.
+            dagelijks leven, ook als er geen duidelijke medische oorzaak meer
+            voor te vinden is, of als een bestaande ziekte de klachten niet
+            helemaal verklaren.
           </p>
           <p>
             Het gaat om reële klachten met een reële impact. Ze passen vaak niet
@@ -963,14 +971,8 @@
         <div class="body-col">
           <p>
             Het netwerk is bedoeld voor kinderfysiotherapeuten in het
-            adherentiegebied van Isala Zwolle die de zorg voor kinderen en
-            jongeren met ALK willen optimaliseren — door actuele kennis,
-            gezamenlijke visie en collegiale uitwisseling.
-          </p>
-          <p>
-            Ons doel is uniformiteit van behandeling op basis van de laatste
-            bewezen effectieve interventies, en het verdiepen en verbreden van
-            kennis binnen de groep.
+            adherentiegebied van Isala Zwolle met specifieke kennis en interesse
+            voor de zorg van kinderen en jongeren met ALK.
           </p>
         </div>
       </div>
@@ -981,8 +983,9 @@
             <div class="num">01</div>
             <h3>Drie bijeenkomsten per jaar</h3>
             <p>
-              Fysieke avonden afwisselend met een spreker, casuïstiekbespreking,
-              vaardigheidstraining en het delen van vragen en ervaringen.
+              De bijeenkomsten worden gehouden in de avond, de inhoud varieert
+              uit een spreker, casuïstiekbespreking, vaardigheidstraining en het
+              intercollegiaal delen van vragen en ervaringen.
             </p>
           </article>
           <article class="werk-card">
@@ -990,8 +993,8 @@
             <h3>Gedeeld behandelprotocol</h3>
             <p>
               Een gezamenlijk opgesteld protocol vormt de basis van behandeling.
-              Aangevuld met incompany-cursussen en kennisdeling vanuit gevolgde
-              scholingen.
+              Continue geactualiseerd en herzien middels kennisdeling en
+              scholing.
             </p>
           </article>
           <article class="werk-card">
@@ -999,7 +1002,7 @@
             <h3>Continue kennisuitwisseling</h3>
             <p>
               Tussen de bijeenkomsten door delen we wetenschappelijke updates
-              per mail en via een gezamenlijke Dropbox die voor alle leden
+              per mail en via een gezamenlijke kennisbank die voor alle leden
               toegankelijk is.
             </p>
           </article>
@@ -1007,8 +1010,8 @@
             <div class="num">04</div>
             <h3>Collegiale consultatie</h3>
             <p>
-              Leden kunnen elkaar raadplegen bij complexe casuïstiek. Sprekers
-              met expertkennis worden uitgenodigd om hun expertise te delen.
+              Leden kunnen elkaar, met toestemming van de patiënt, raadplegen
+              bij complexe casuïstiek.
             </p>
           </article>
         </div>
@@ -1024,10 +1027,6 @@
               begeleidt en werkzaam is in het adherentiegebied van Isala kan lid
               worden. Collega's kunnen door de leden worden aangedragen.
               Structurele aanwezigheid wordt gevraagd.
-            </p>
-            <p>
-              De organisatie ligt bij een voorzitter — werkzaam in Isala — met
-              een kerngroep daaromheen.
             </p>
           </div>
           <div class="lid-meta">
@@ -1105,42 +1104,50 @@
             <h3>Educatie over pijn</h3>
             <ul>
               <li>
-                <span class="lt-label"
-                  >Podcast — Wat is pijn? Voor de jonge patiënt</span
-                >
                 <a
+                  class="link-row"
                   href="https://www.henw.org/podcast/wat-pijn-een-podcast-voor-de-jonge-patient"
                   target="_blank"
                   rel="noopener"
-                  >henw.org · Pijn-podcast</a
                 >
+                  <span class="lt-label"
+                    >Podcast — Wat is pijn? Voor de jonge patiënt</span
+                  >
+                  <span class="lt-src">henw.org · Pijn-podcast</span>
+                </a>
               </li>
               <li>
-                <span class="lt-label">Filmpje — Educatie over pijn</span>
                 <a
+                  class="link-row"
                   href="https://www.youtube.com/watch?v=UznY5Nry6VY"
                   target="_blank"
                   rel="noopener"
-                  >YouTube · UznY5Nry6VY</a
                 >
+                  <span class="lt-label">Filmpje — Educatie over pijn</span>
+                  <span class="lt-src">YouTube · UznY5Nry6VY</span>
+                </a>
               </li>
               <li>
-                <span class="lt-label">Filmpje — Struggle switch</span>
                 <a
+                  class="link-row"
                   href="https://www.youtube.com/watch?v=rCp1l16GCXI"
                   target="_blank"
                   rel="noopener"
-                  >YouTube · rCp1l16GCXI</a
                 >
+                  <span class="lt-label">Filmpje — Struggle switch</span>
+                  <span class="lt-src">YouTube · rCp1l16GCXI</span>
+                </a>
               </li>
               <li>
-                <span class="lt-label">Filmpje — Neuroplasticiteit</span>
                 <a
+                  class="link-row"
                   href="https://www.youtube.com/watch?v=vFSq9welUWg"
                   target="_blank"
                   rel="noopener"
-                  >YouTube · vFSq9welUWg</a
                 >
+                  <span class="lt-label">Filmpje — Neuroplasticiteit</span>
+                  <span class="lt-src">YouTube · vFSq9welUWg</span>
+                </a>
               </li>
             </ul>
           </article>
@@ -1148,40 +1155,37 @@
             <h3>Hoofdpijn</h3>
             <ul>
               <li>
-                <span class="lt-label">Hoofdpijn bij kinderen — folder</span>
                 <a
-                  href="http://www.isala.nl/patienten/folders/7208-hoofdpijn-bij-kinderen-behandeling-en-leefregels"
+                  class="link-row"
+                  href="https://www.isala.nl/patientenfolders/7208-hoofdpijn-bij-kinderen/"
                   target="_blank"
                   rel="noopener"
-                  >isala.nl · Folder 7208</a
                 >
+                  <span class="lt-label">Hoofdpijn bij kinderen — folder</span>
+                  <span class="lt-src">isala.nl · Folder 7208</span>
+                </a>
               </li>
               <li>
-                <span class="lt-label">Headache Relief Guide</span>
                 <a
+                  class="link-row"
                   href="https://www.headachereliefguide.com"
                   target="_blank"
                   rel="noopener"
-                  >headachereliefguide.com</a
                 >
+                  <span class="lt-label">Headache Relief Guide</span>
+                  <span class="lt-src">headachereliefguide.com</span>
+                </a>
               </li>
               <li>
-                <span class="lt-label">Alles over hoofdpijn</span>
                 <a
+                  class="link-row"
                   href="https://www.allesoverhoofdpijn.be"
                   target="_blank"
                   rel="noopener"
-                  >allesoverhoofdpijn.be</a
                 >
-              </li>
-              <li>
-                <span class="lt-label">Migraine — how it works (EN)</span>
-                <a
-                  href="https://www.youtube.com/watch?v=bJs50wrv704"
-                  target="_blank"
-                  rel="noopener"
-                  >YouTube · bJs50wrv704</a
-                >
+                  <span class="lt-label">Alles over hoofdpijn</span>
+                  <span class="lt-src">allesoverhoofdpijn.be</span>
+                </a>
               </li>
             </ul>
           </article>
