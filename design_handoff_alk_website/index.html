@@ -127,18 +127,41 @@
       }
 
       /* ---- top nav ---- */
+      /* --shrink is 0 at the top of the page and 1 once scrolled past
+         --shrink-range; JS writes it, every size below interpolates on it. */
       header.top {
+        --shrink: 0;
+        --shrink-range: 180px;
+        --row-tall: 146px;
+        --row-short: 88px;
+        --logo-tall: 104px;
+        --logo-short: 62px;
         position: sticky;
         top: 0;
-        z-index: 50;
-        background: #ffffff;
-        border-bottom: 1px solid var(--rule);
+        z-index: 1000;
+        /* transparent over the hero, fading to a white bar with a rule as it
+           compacts; the border keeps its 1px box at 0 alpha so nothing shifts */
+        background: color-mix(
+          in srgb,
+          #ffffff calc(100% * var(--shrink)),
+          transparent
+        );
+        border-bottom: 1px solid
+          color-mix(
+            in srgb,
+            var(--rule) calc(100% * var(--shrink)),
+            transparent
+          );
+        box-shadow: 0 4px 14px -10px
+          rgba(26, 25, 68, calc(0.14 * var(--shrink)));
       }
       .top .row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 84px;
+        height: calc(
+          var(--row-tall) + (var(--row-short) - var(--row-tall)) * var(--shrink)
+        );
       }
       .brand {
         display: flex;
@@ -149,7 +172,10 @@
         white-space: nowrap;
       }
       .brand img {
-        height: 56px;
+        height: calc(
+          var(--logo-tall) + (var(--logo-short) - var(--logo-tall)) *
+            var(--shrink)
+        );
         width: auto;
         display: block;
         color: var(--ink);
@@ -162,7 +188,7 @@
       }
       nav ul {
         display: flex;
-        gap: 28px;
+        gap: calc(36px - 6px * var(--shrink));
         list-style: none;
         padding: 0;
         margin: 0;
@@ -170,7 +196,7 @@
       nav a {
         color: var(--ink-soft);
         text-decoration: none;
-        font-size: 15px;
+        font-size: calc(18px - 2px * var(--shrink));
         padding: 6px 0;
         border-bottom: 1.5px solid transparent;
       }
@@ -181,7 +207,7 @@
 
       /* ---- hero ---- */
       .hero {
-        padding: 120px 0 110px;
+        padding: 96px 0 110px;
       }
       .hero-grid {
         display: grid;
@@ -457,6 +483,11 @@
       }
       .map-shell {
         margin-top: 40px;
+        /* Leaflet's panes and controls run up to z-index 800; isolate so they
+           stack inside the shell instead of climbing over the sticky header */
+        position: relative;
+        z-index: 0;
+        isolation: isolate;
         display: grid;
         grid-template-columns: 1fr 380px;
         background: var(--bg-card);
@@ -712,6 +743,12 @@
         nav ul {
           display: none;
         }
+        header.top {
+          --row-tall: 72px;
+          --row-short: 72px;
+          --logo-tall: 52px;
+          --logo-short: 52px;
+        }
         section {
           padding: 64px 0;
         }
@@ -749,7 +786,7 @@
           <p class="lede">
             Een kennisnetwerk van gespecialiseerde kinderfysiotherapeuten die
             kinderen en jongeren met ALK helpen om grip te krijgen op hun
-            klachten — en weer ruimte vinden in het dagelijks leven.
+            klachten — en weer kunnen meedoen in het dagelijkse leven.
           </p>
           <div class="cta-row">
             <a href="#specialisten" class="btn primary"
@@ -1175,7 +1212,7 @@
           website: "www.Isala.nl",
           url: "https://www.isala.nl",
           place: "Zwolle",
-          coords: [52.5172, 6.0834],
+          coords: [52.513499, 6.120749],
         },
         {
           name: "Linda van Petersen",
@@ -1184,7 +1221,7 @@
           website: "www.Isala.nl",
           url: "https://www.isala.nl",
           place: "Zwolle",
-          coords: [52.5164, 6.0826],
+          coords: [52.513499, 6.122249],
         },
         {
           name: "Leonie Scholten",
@@ -1193,7 +1230,7 @@
           website: "www.KinderfysioLee.nl",
           url: "https://www.kinderfysiolee.nl",
           place: "Hattem en Wapenveld",
-          coords: [52.4747, 6.0667],
+          coords: [52.4677813, 6.0698803],
         },
         {
           name: "Mirjam van der Sleen",
@@ -1202,7 +1239,7 @@
           website: "www.treant.nl",
           url: "https://www.treant.nl/zorg/ziekenhuiszorg/specialismen-en-afdelingen/kinder--en-jeugdrevalidatie",
           place: "Emmen, Hoogeveen en Stadskanaal",
-          coords: [52.7858, 6.8978],
+          coords: [52.7858904, 6.9131412],
         },
         {
           name: "Karin Schiphorst",
@@ -1211,7 +1248,7 @@
           website: "www.Isala.nl",
           url: "https://www.isala.nl",
           place: "Zwolle",
-          coords: [52.5168, 6.083],
+          coords: [52.513499, 6.125249],
         },
         {
           name: "Hanneke Rouw",
@@ -1220,7 +1257,7 @@
           website: "www.Isala.nl",
           url: "https://www.isala.nl",
           place: "Zwolle",
-          coords: [52.5176, 6.0838],
+          coords: [52.513499, 6.126749],
         },
         {
           name: "Nynke van der Meulen",
@@ -1229,7 +1266,7 @@
           website: "www.Isala.nl",
           url: "https://www.isala.nl",
           place: "Zwolle",
-          coords: [52.516, 6.0822],
+          coords: [52.513499, 6.123749],
         },
         {
           name: "Elise Onvlee",
@@ -1238,7 +1275,7 @@
           website: "www.Kinderfysioderegge.nl",
           url: "https://www.kinderfysioderegge.nl",
           place: "Zwolle",
-          coords: [52.5128, 6.0938],
+          coords: [52.53015, 6.101822],
         },
         {
           name: "Janita Ebeke",
@@ -1247,7 +1284,7 @@
           website: "www.Kinderfysioderegge.nl",
           url: "https://www.kinderfysioderegge.nl",
           place: "Zwolle",
-          coords: [52.5132, 6.0942],
+          coords: [52.4882936, 6.1183546],
         },
         {
           name: "Gabrielle Koster",
@@ -1256,7 +1293,7 @@
           website: "www.Fysiopluszwolle.nl",
           url: "https://www.fysiopluszwolle.nl",
           place: "Zwolle",
-          coords: [52.5208, 6.079],
+          coords: [52.5321125, 6.0869428],
         },
 
         {
@@ -1266,7 +1303,7 @@
           website: "www.Kinderfysiokampen.nl",
           url: "https://www.kinderfysiokampen.nl",
           place: "Kampen",
-          coords: [52.555, 5.9111],
+          coords: [52.5583819, 5.9074216],
         },
         {
           name: "Marijke Nooter",
@@ -1275,7 +1312,7 @@
           website: "www.goedzorgfysiotherapie.nl",
           url: "https://www.goedzorgfysiotherapie.nl",
           place: "Hasselt en Zwartsluis",
-          coords: [52.5944, 6.0944],
+          coords: [52.5930894, 6.1035779],
         },
         {
           name: "Marlou Eilders",
@@ -1284,7 +1321,7 @@
           website: "www.goedzorgfysiotherapie.nl",
           url: "https://www.goedzorgfysiotherapie.nl",
           place: "Hasselt, Genemuiden en IJsselmuiden",
-          coords: [52.63, 6.05],
+          coords: [52.5640965, 5.9391858],
         },
         {
           name: "Ingrid Timmerhuis",
@@ -1293,7 +1330,7 @@
           website: "www.fysiotherapiedalfsen.nl",
           url: "https://www.fysiotherapiedalfsen.nl",
           place: "Dalfsen",
-          coords: [52.5103, 6.2547],
+          coords: [52.5062533, 6.2549866],
         },
         {
           name: "Anneke Broersma",
@@ -1302,7 +1339,7 @@
           website: "www.fysiotherapiedalfsen.nl",
           url: "https://www.fysiotherapiedalfsen.nl",
           place: "Dalfsen",
-          coords: [52.5108, 6.2551],
+          coords: [52.5062096, 6.2547552],
         },
         {
           name: "Sandra Luten",
@@ -1311,7 +1348,7 @@
           website: "www.de-kinderpraktijk.nl",
           url: "https://www.de-kinderpraktijk.nl",
           place: "Meppel",
-          coords: [52.6953, 6.1944],
+          coords: [52.6984737, 6.1978871],
         },
         {
           name: "Marjon Potkamp",
@@ -1320,7 +1357,7 @@
           website: "www.praktijkfysio.nl",
           url: "https://www.praktijkfysio.nl",
           place: "Havelte / Wolvega / Steenwijk",
-          coords: [52.7717, 6.24],
+          coords: [52.77384, 6.233647],
         },
         {
           name: "Linette Straatsma",
@@ -1329,16 +1366,7 @@
           website: "www.moor-kids.nl",
           url: "https://www.moor-kids.nl",
           place: "Emmeloord",
-          coords: [52.7117, 5.7472],
-        },
-        {
-          name: "Sanne-Belle van der Reest",
-          phone: "0527-785916",
-          email: "info@vitanovaemmeloord.nl",
-          website: "www.vitanovaemmeloord.nl",
-          url: "https://www.vitanovaemmeloord.nl",
-          place: "Emmeloord",
-          coords: [52.7121, 5.7476],
+          coords: [52.7071412, 5.7507504],
         },
         {
           name: "Kirsha Kamphuis",
@@ -1347,7 +1375,7 @@
           website: "www.fysioheerde.nl",
           url: "https://www.fysioheerde.nl",
           place: "Heerde",
-          coords: [52.3922, 6.0367],
+          coords: [52.3886282, 6.0378927],
         },
         {
           name: "Thomas Post",
@@ -1356,7 +1384,7 @@
           website: "www.fysioheerde.nl",
           url: "https://www.fysioheerde.nl",
           place: "Heerde",
-          coords: [52.3926, 6.0371],
+          coords: [52.3886282, 6.0378927],
         },
         {
           name: "Joanne Scherpbier",
@@ -1365,7 +1393,7 @@
           website: "www.oneofakind-kinderfysiotherapie.nl",
           url: "https://www.oneofakind-kinderfysiotherapie.nl",
           place: "Nunspeet",
-          coords: [52.3792, 5.7822],
+          coords: [52.3692234, 5.7715845],
         },
       ];
 
@@ -1462,6 +1490,35 @@
       renderList();
       filterEl.addEventListener("input", (e) => renderList(e.target.value));
 
+      // header shrink: map scroll position onto --shrink (0 -> 1)
+      const topBar = document.querySelector("header.top");
+      const shrinkRange =
+        parseFloat(
+          getComputedStyle(topBar).getPropertyValue("--shrink-range"),
+        ) || 180;
+      let shrinkQueued = false;
+
+      function applyShrink() {
+        shrinkQueued = false;
+        const p = Math.min(1, Math.max(0, window.pageYOffset / shrinkRange));
+        // ease-out so most of the shrink happens in the first few pixels
+        topBar.style.setProperty(
+          "--shrink",
+          (1 - (1 - p) * (1 - p)).toFixed(4),
+        );
+      }
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (shrinkQueued) return;
+          shrinkQueued = true;
+          requestAnimationFrame(applyShrink);
+        },
+        { passive: true },
+      );
+      applyShrink();
+
       // smooth scroll for nav
       document.querySelectorAll('a[href^="#"]').forEach((a) => {
         a.addEventListener("click", (e) => {
@@ -1470,9 +1527,22 @@
           const target = document.querySelector(id);
           if (target) {
             e.preventDefault();
+            // The sticky header will be fully shrunk once the scroll
+            // settles, so everything below it moves up by the height it
+            // loses -- take that off the target too, or the section lands
+            // underneath the bar.
+            const shortRow =
+              parseFloat(
+                getComputedStyle(topBar).getPropertyValue("--row-short"),
+              ) || 88;
+            const lost = Math.max(0, topBar.offsetHeight - shortRow);
             const y =
-              target.getBoundingClientRect().top + window.pageYOffset - 60;
-            window.scrollTo({ top: y, behavior: "smooth" });
+              target.getBoundingClientRect().top +
+              window.pageYOffset -
+              lost -
+              shortRow -
+              16;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
           }
         });
       });
