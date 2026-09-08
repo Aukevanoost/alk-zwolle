@@ -20,11 +20,11 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 
 ### 1. Top navigation (sticky)
 - **Background**: `#ffffff`, bottom border `1px solid var(--rule)` (`#dadde3`).
-- **Height**: 84px.
+- **Height**: interpolates 146px → 88px on scroll from 900px up; 74px → 62px below that.
 - **Layout**: flex, space-between. Logo SVG on the left (`height: 56px`), nav `<ul>` on the right with 28px gap.
 - **Nav items**: "Over ons" → `#over-ons`, "Wat is ALK?" → `#wat-is-alk`, "Aanpak" → `#aanpak`, "Werkwijze" → `#werkwijze`, "Vind een specialist" → `#specialisten`, "Educatie" → `#links`.
 - **Nav link style**: 15px, `var(--ink-soft)` `#4a4a6e`, no underline; hover → `var(--ink)` with a 1.5px navy bottom-border (`var(--accent)` `#2d2c7b`).
-- **On mobile (<900px)**: hide the nav `<ul>`.
+- **Below 900px**: the `<ul>` collapses into a burger button (`.nav-toggle`, 44×44 tap target) that toggles `.nav-open` on the header. The panel (`.site-nav`) drops full-width under the bar with 52px-tall rows; it closes on link click, on Escape, on an outside click, and when the viewport crosses back over 900px. The bar itself also loses its scroll-linked transparency while open so the panel reads as solid.
 
 ### 2. Hero
 - **Background**: `var(--bg)` `#fafbfc` (page default).
@@ -103,6 +103,27 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 - **Padding**: 56px top / 64px bottom.
 - Flex row, space-between, wraps. Logo (height 64px), centre paragraph "Regio Zwolle en omstreken / Kennisnetwerk voor gespecialiseerde kinderfysiotherapie", right-aligned attribution "Kaartdata © OpenStreetMap-bijdragers".
 
+## Responsive strategy
+The stylesheet is **mobile-first**: every base rule describes the narrowest
+viewport and each component is followed by the `min-width` queries that add to
+it. There is no `max-width` query in the file.
+
+Breakpoint ladder:
+
+| Min-width | What changes |
+|---|---|
+| base | single-column everywhere; symptom chips 2-up; burger nav; stacked map + list |
+| 480px | CTA buttons sit side by side instead of full-width |
+| 600px | werk-grid 2-up; lid-meta returns to three stacked metrics |
+| 760px | audience + links cards 2-up; symptom chips 3-up |
+| 900px | the design's own desktop switch — two-col grids, bps 3-up, werk-grid 4-up, lid-block split, map beside the list, inline nav, tall header |
+| 1000px | symptom chips 5-up (the handoff layout) |
+
+Long Dutch compounds ("Uitvalsverschijnselen", "Concentratieproblemen") are
+wider than a phone column, so grid tracks use `minmax(0, 1fr)` and the chips
+hyphenate; from 1000px the tracks revert to the design's `1fr` and
+`hyphens: manual` so the desktop rendering is unchanged.
+
 ## Interactions & Behavior
 - **Smooth scroll** on every in-page anchor link. Subtract 60px to compensate for the sticky header.
 - **Hover transitions**: nav underline, button `transform: translateY(-1px)` and `.btn .arr` arrow translate 3px, list items background fade.
@@ -111,7 +132,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
   - Marker popup opens on marker click.
   - Clicking a list item pans/zooms (`setView(..., 12)`) and opens that marker's popup; the active list item gets the `.active` class (highlighted background).
   - Filter input does case-insensitive substring match against `name + " " + place`. Counter updates live.
-- **Responsive breakpoint**: `max-width: 900px` collapses the 2-column grids, the 4-column werk-grid (→ 2 cols), the 5-column symptom-grid (→ 2 cols), the lid-block and map-shell. Top nav `<ul>` is hidden (no replacement; if a real nav menu/burger is desired, add one in implementation).
+- **Map on touch** (`pointer: coarse`): dragging and pinch-zoom start disabled and a `.map-gate` overlay ("Tik om de kaart te gebruiken") covers the map, so a one-finger swipe scrolls the page instead of panning the map. Tapping the gate — or any specialist in the list — releases it; scrolling the map out of view re-arms it.
 
 ## State Management
 The page is content-driven; only one piece of dynamic state exists:
@@ -156,11 +177,15 @@ The 22-therapist dataset is embedded in the page as a plain JS array (`SPECIALIS
   - Symptom / nav / button: 14–15px
 
 ### Spacing
-- Section vertical padding: **96px** (desktop), **64px** (mobile)
-- Hero vertical padding: **120/110** (desktop), **64** (mobile)
-- Container max-width: **1180px**, side-padding 32px
-- Card padding range: 28–48px
-- Grid gaps: 12px (chips) / 20–24px (cards) / 56–72px (two-col)
+The vertical rhythm is fluid: each ramp reaches its full desktop value exactly at
+900px, so anything from 900px up matches the figures below to the pixel.
+
+- Section vertical padding: `clamp(56px, 10.7vw, 96px)`
+- Hero vertical padding: `clamp(36px, 10.7vw, 96px)` top / `clamp(48px, 12.3vw, 110px)` bottom
+- Container max-width: **1180px**, side-padding `clamp(20px, 3.6vw, 32px)`
+- Card padding: `clamp(…)` ramps bottoming out around 20–24px on phones
+- Grid gaps: 10–12px (chips) / 16–24px (cards) / 24–72px (two-col)
+- Minimum tap target: `--tap: 44px` (buttons, burger, search field; 52px nav rows)
 
 ### Radii & shadows
 - Standard radius: `10px` (cards, map shell, inputs)
