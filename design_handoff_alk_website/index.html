@@ -51,7 +51,7 @@
         --gutter: clamp(20px, 3.6vw, 32px);
         --section-y: clamp(56px, 10.7vw, 96px);
         /* gap from a section's intro to the block below it */
-        --block-gap: clamp(32px, 4.5vw, 40px);
+        --block-gap: clamp(40px, 6vw, 64px);
         /* 12-column grid, engaged at 900px. Every desktop split spans whole
            columns so the page has one set of vertical edges.
            col = (100% - 11 * --grid-gap) / 12 */
@@ -104,8 +104,12 @@
         line-height: 1.08;
       }
       h2 {
-        font-size: clamp(24px, 3.2vw, 38px);
+        font-size: clamp(24px, 3.4vw, 44px);
         line-height: 1.18;
+        /* the label column is only 4 of 12 tracks; the one compound wider
+           than it carries a &shy; so the break lands between the parts
+           rather than wherever the dictionary would put it */
+        hyphens: manual;
       }
       h3 {
         font-size: clamp(19px, 1vw + 15px, 22px);
@@ -157,7 +161,7 @@
         margin-bottom: 18px;
       }
       .eyebrow.spaced {
-        margin-top: clamp(36px, 6vw, 56px);
+        margin-top: clamp(40px, 6.5vw, 64px);
       }
       .eyebrow.muted {
         color: var(--ink-mute);
@@ -499,11 +503,27 @@
         grid-template-columns: minmax(0, 1fr);
         gap: 24px;
       }
-      .two-col .label-col h2 {
-        margin-bottom: 12px;
-      }
+      /* the eyebrow heads the section as a full-width rule at every width;
+         the h2 hangs below it */
       .two-col .label-col .eyebrow {
-        margin-bottom: 14px;
+        position: relative;
+        margin-bottom: 0;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--rule);
+      }
+      /* navy head of the section rule, to keep the hairline from reading
+         as one more empty divider */
+      .two-col .label-col .eyebrow::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 48px;
+        height: 2px;
+        background: var(--accent);
+      }
+      .two-col .label-col h2 {
+        margin: 20px 0 12px;
       }
       .two-col .body-col p {
         font-size: clamp(16px, 0.8vw + 14px, 18px);
@@ -514,14 +534,35 @@
       @media (min-width: 900px) {
         .two-col {
           grid-template-columns: repeat(12, minmax(0, 1fr));
-          gap: var(--grid-gap);
+          column-gap: var(--grid-gap);
+          row-gap: 0;
           align-items: start;
         }
+        /* .label-col is a stacking wrapper for phones only; on desktop it
+           dissolves so its eyebrow can head the full width and its h2 can
+           share row 2 with the body — the two text columns then start on the
+           same line instead of the body hanging off the eyebrow. */
         .two-col .label-col {
-          grid-column: 1 / span 5;
+          display: contents;
+        }
+        .two-col .label-col .eyebrow {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          padding-bottom: 18px;
+        }
+        .two-col .label-col h2 {
+          grid-column: 1 / span 4;
+          grid-row: 2;
+          /* both columns open at 30px below the eyebrow rule, but the serif
+             sets a taller content box than the body sans — lifting the h2 by
+             its own cap-top offset (0.255em) less the body's (6.8px) puts the
+             two first lines on one optical line at every viewport */
+          margin: calc(37px - 0.255em) 0 0;
         }
         .two-col .body-col {
           grid-column: 7 / span 6;
+          grid-row: 2;
+          margin-top: 30px;
         }
       }
 
@@ -579,7 +620,7 @@
         font-size: clamp(14px, 0.4vw + 13px, 15px);
         color: var(--ink);
         font-weight: 500;
-        hyphens: auto;
+        hyphens: manual;
         overflow-wrap: break-word;
       }
       @media (min-width: 760px) {
@@ -596,9 +637,6 @@
       @media (min-width: 1000px) {
         .symptom-grid {
           grid-template-columns: repeat(5, 1fr);
-        }
-        .symptom {
-          hyphens: manual;
         }
       }
 
@@ -725,7 +763,7 @@
       }
       .meta-item {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         gap: 14px;
       }
       .meta-item .meta-num {
@@ -1258,8 +1296,8 @@
           <div class="symptom">Buikpijn</div>
           <div class="symptom">Duizeligheid</div>
           <div class="symptom">Hartkloppingen</div>
-          <div class="symptom">Uitvalsverschijnselen</div>
-          <div class="symptom">Concentratieproblemen</div>
+          <div class="symptom">Uitvals&shy;verschijnselen</div>
+          <div class="symptom">Concentratie&shy;problemen</div>
           <div class="symptom">Slaapproblemen</div>
           <div class="symptom">Verminderde belastbaarheid</div>
         </div>
@@ -1405,7 +1443,7 @@
       <div class="wrap two-col">
         <div class="label-col">
           <div class="eyebrow">Vind een specialist</div>
-          <h2>21 kinderfysiotherapeuten in de regio.</h2>
+          <h2>21 kinderfysio&shy;therapeuten in de regio.</h2>
         </div>
         <div class="body-col">
           <p>

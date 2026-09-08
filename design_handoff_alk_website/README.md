@@ -44,7 +44,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 
 ### 3. Over ons (`#over-ons`)
 - Standard section background `var(--bg)`.
-- **Layout**: `.two-col` on the 12-column grid — `.label-col` spans cols 1–5, `.body-col` spans cols 7–12 (col 6 is left empty as the visual gap). Left has eyebrow + H2; right has 2 paragraphs. The body edge is the page's main spine (see *Layout grid*).
+- **Layout**: `.two-col` on the 12-column grid, in two rows. Row 1 is the eyebrow spanning cols 1–12, closed by a 1px `var(--rule)` hairline whose first 48px is `var(--accent)` navy — the section marker. Row 2 puts the H2 on cols 1–4 and the two body paragraphs on cols 7–12, both opening 30px under the rule so their first lines share one optical line. From 900px `.label-col` is `display: contents`, so its eyebrow and H2 become grid items in their own right; below 900px it is a plain stacked wrapper and the eyebrow keeps its rule. The body edge is the page's main spine (see *Layout grid*).
 - Below the two-column block: **`.audience` grid** — 2 cards side-by-side (1-up below 760px), 24px gap, `var(--block-gap)` top margin. Each `.aud-card` is white, `1px solid var(--rule)`, 10px radius, `clamp(24px, 5vw, 36px)` padding, with:
   - H3 "Voor kinderen & ouders" / "Voor verwijzers".
   - 1 paragraph.
@@ -54,7 +54,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 ### 4. Wat is ALK? (`#wat-is-alk`)
 - **Background override**: `var(--bg-alt)` `#f1f3f6`.
 - Same `.two-col` block (eyebrow, H2, two body paragraphs).
-- Below: **`.symptom-grid`** — 5-column grid from 1000px (3-up from 760px, 2-up below), 12px gap, `clamp(28px, 4vw, 36px)` top margin. It hangs off a `.eyebrow.spaced` ("Veelvoorkomende klachten"), not the two-col block, which is why its ramp is tighter than `--block-gap`.
+- Below: **`.symptom-grid`** — 5-column grid from 1000px (3-up from 760px, 2-up below), 12px gap, `clamp(28px, 4vw, 36px)` top margin. It hangs off a `.eyebrow.spaced` ("Veelvoorkomende klachten") at `clamp(40px, 6.5vw, 64px)` top margin, not the two-col block, which is why its ramp is tighter than `--block-gap`. The sub-label deliberately carries no rule — the hairline marks a section, not a block inside one.
 - Each `.symptom` chip: white card, `1px solid var(--rule-cool)` `#d3d7dd`, 10px radius, `clamp(14px, 3vw, 22px) clamp(8px, 2.2vw, 18px)` padding, centred `clamp(14px, 0.4vw + 13px, 15px)` text. Items: "Vermoeidheid", "Hoofdpijn", "Spier- & gewrichtspijn", "Buikpijn", "Duizeligheid", "Hartkloppingen", "Uitvalsverschijnselen", "Concentratieproblemen", "Slaapproblemen", "Verminderde belastbaarheid".
 
 ### 5. Onze aanpak (`#aanpak`)
@@ -80,11 +80,11 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
     - "€25 / Jaarlijkse contributie"
     - "3× / Bijeenkomsten per jaar"
     - "22 / Aangesloten therapeuten" — note this says 22 while the dataset holds 21; see *Known content drift* below.
-  - Below 600px each metric becomes a number-beside-label row (the number gets `min-width: 3ch` so the labels align); below 900px the border-left becomes a border-top with 24px top padding.
+  - Below 600px each metric becomes a number-beside-label row: the number gets `min-width: 3ch` so the labels share a left edge, and the row is `align-items: center` so the 12px label centres on the numeral. Baseline alignment is wrong here — against a 28px numeral it drops the label onto the numeral's foot and the three rows read as sagging. Below 900px the border-left becomes a border-top with 24px top padding.
 
 ### 7. Vind een specialist (`#specialisten`)
 - **Background override**: `var(--bg-alt)` `#f1f3f6`.
-- `.two-col` intro ("21 kinderfysiotherapeuten in de regio.").
+- `.two-col` intro ("21 kinderfysiotherapeuten in de regio."). The heading carries a `&shy;` in `kinderfysio&shy;therapeuten`: it is the one word wider than the 4-column label track, and the soft hyphen puts the break between the compound's parts rather than wherever the dictionary lands it.
 - **`.map-shell`** below (`var(--block-gap)` top): grid `minmax(0, 1fr) var(--col5)` and 640px tall from 900px — the list lands on the same column line as the hero card; below that it stacks, with `#map` at `clamp(300px, 50dvh, 440px)` and the list capped at `70dvh`. White background, `1px solid var(--rule)`, 10px radius, `overflow: hidden`.
   - **Left**: `#map` — Leaflet container, 100% × 100%. Tile layer = **PDOK BRT-Achtergrondkaart** (`https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png`), attribution credits Kadaster + PDOK. Initial view fits all 21 marker bounds with `pad(0.18)` (`minZoom: 6`, `maxZoom: 19`). `scrollWheelZoom` is disabled by default and enabled on map click; disabled again on `mouseout`.
   - **Right**: `.specialist-list` — scrollable list, `border-left` from 900px and `border-top` below. Sticky top `.filter-bar` with a search input ("Zoek op naam of plaats…") and a 12px counter ("21 specialisten" / "N van 21 specialisten"). The input is 16px on phones — anything smaller makes iOS Safari zoom on focus — dropping to 14px at ≥900px. Below, one `.sp-item` per specialist (`14px 20px` padding, `16px 20px` at ≥900px, bottom border, hover `var(--bg-alt)`, active `var(--accent-soft)`):
@@ -131,7 +131,8 @@ At the 1180px container this gives 71px columns and these spans:
 
 | Block | Columns | Width |
 |---|---|---|
-| Intro label | 1–5 | 451 |
+| Intro eyebrow | 1–12 | 1116 |
+| Intro heading | 1–4 | 356 |
 | Intro body | 7–12 | 546 |
 | Hero headline | 1–7 | 641 |
 | Hero card / specialist list | 8–12 | 451 |
@@ -143,6 +144,12 @@ The payoff is that the page has **two recurring vertical edges** instead of six
 competing ones: the intro body column at col 7, which is also the second card
 of any 2-up row and the third of a 4-up row; and the aside at col 8, shared by
 the hero card and the specialist list.
+
+The intro heading stops at col 4 rather than col 5 on purpose. A 5/6 split
+reads as two equal slabs; 4 against 6, with the full-width eyebrow rule tying
+them together, reads as a label, a heading and its body. The heading is the
+one block that does not sit on the col-7 spine, and the trailing air in its
+row is the section's breathing room, not a missing column.
 
 **The one exception** is `.symptom-grid`, which stays 5-up. Twelve columns do
 not divide by five, and the long Dutch compounds ("Uitvalsverschijnselen")
@@ -175,9 +182,12 @@ every viewport width rather than stepping at whichever breakpoint that
 particular grid happens to change column count.
 
 Long Dutch compounds ("Uitvalsverschijnselen", "Concentratieproblemen") are
-wider than a phone column, so grid tracks use `minmax(0, 1fr)` and the chips
-hyphenate; from 1000px the tracks revert to the design's `1fr` and
-`hyphens: manual` so the desktop rendering is unchanged.
+wider than a phone column, so grid tracks use `minmax(0, 1fr)` and those two
+chips carry a `&shy;` at the compound boundary; from 1000px the tracks revert
+to the design's `1fr` and the chips need no break at all. Hyphenation is
+`manual` everywhere — headings and chips break only where a soft hyphen says
+they may, so no viewport can produce a dictionary break like
+"kinderfysi-otherapeuten".
 
 ## Interactions & Behavior
 - **Smooth scroll** on every in-page anchor link. The offset is computed, not a
@@ -228,7 +238,7 @@ The 21-therapist dataset is embedded in the page as a plain JS array (`SPECIALIS
 - **Body / UI**: `"Public Sans"`, weights 400 / 500 / 600. Loaded from Google Fonts.
 - **Sizes**:
   - H1: `clamp(30px, 5.4vw, 64px)` / line-height 1.08, 1.05 at ≥900px
-  - H2: `clamp(24px, 3.2vw, 38px)` / 1.18, 1.15 at ≥900px
+  - H2: `clamp(24px, 3.4vw, 44px)` / 1.18, 1.15 at ≥900px. In the 4-column label track the H2 also carries a `margin-top: calc(37px - 0.255em)` at ≥900px: 0.255em is Source Serif's cap-top offset inside its line box and 6.8px is Public Sans's at 18px, so the lift is exactly what puts the heading's cap-height on the body's, whatever the ramp has done to either size.
   - H3: `clamp(19px, 1vw + 15px, 22px)` / 1.25 (cards override to 18–24px)
   - Body: 17px / 1.55, paragraphs in `.body-col` are `clamp(16px, 0.8vw + 14px, 18px)`
   - Lede: `clamp(17px, 1.6vw + 12px, 21px)` / 1.5
@@ -236,13 +246,15 @@ The 21-therapist dataset is embedded in the page as a plain JS array (`SPECIALIS
   - Symptom / nav / button: 14–15px
 
 ### Spacing
-The vertical rhythm is fluid. Every **spacing** ramp reaches its full desktop
+The vertical rhythm is fluid. Most **spacing** ramps reach their full desktop
 value at or just before 900px, so from 900px up the figures below match to the
-pixel:
+pixel. `--block-gap` is the exception — it keeps growing to 1067px, so a
+900px-wide frame shows 40px where the desktop design shows 64px:
 
 | Ramp | Caps at |
 |---|---|
-| `--gutter`, `--block-gap` | 889px |
+| `--gutter` | 889px |
+| `--block-gap` | ~1067px (40px at 900px, not 64px) |
 | `--section-y`, hero padding | ~897px |
 
 The **type** ramps do not, and this is the one place where reading the figures
@@ -254,10 +266,11 @@ desktop switch:
 | Lede | 562px | 21px |
 | H3 | 700px | 22px |
 | H1 | ~1185px | **48.6px**, not 64px |
-| H2 | ~1187px | **28.8px**, not 38px |
+| H2 | ~1294px | **30.6px**, not 44px |
 
-So H1 only renders at its documented 64px from ~1185px up. If you are building
-to a 900px-wide frame, expect 48.6px.
+So H1 only renders at its documented 64px from ~1185px up, and H2 its 44px only
+from ~1294px — past the 1180px container, so the H2 never quite reaches its cap
+inside `.wrap`. If you are building to a 900px-wide frame, expect 48.6px / 30.6px.
 
 - Section vertical padding: `clamp(56px, 10.7vw, 96px)`
 - Hero vertical padding: `clamp(36px, 10.7vw, 96px)` top / `clamp(48px, 12.3vw, 110px)` bottom
@@ -272,14 +285,15 @@ to a 900px-wide frame, expect 48.6px.
   | `--pad-lg` | 48px | lid-block (the full-width feature panel) |
 
   Each is a `clamp()` bottoming out at 14–24px on phones.
-- Intro→block gap: `--block-gap: clamp(32px, 4.5vw, 40px)`, shared by
+- Intro→block gap: `--block-gap: clamp(40px, 6vw, 64px)`, shared by
   `.audience`, `.bps`, `.werk-grid`, `.links-grid` and `.map-shell`. The chip
   grid is the one deliberate exception at `clamp(28px, 4vw, 36px)`, because it
   measures an eyebrow→chips gap rather than intro→block.
-- Gap scale: **4 / 8 / 12 / 16 / 24 / 32 / 48**. 4px is a hairline for
-  label+source pairs; 24px is the grid gutter and the gap of every card row.
-  Asymmetric splits get their visual gap from an *empty column*, not a large
-  gap value — which is why nothing above 48px remains.
+- Gap scale: **4 / 8 / 12 / 16 / 24 / 32 / 48 / 64**. 4px is a hairline for
+  label+source pairs; 24px is the grid gutter and the gap of every card row;
+  64px is reserved for `--block-gap`, the one gap that separates a section's
+  intro from the block under it. *Horizontal* asymmetric splits still get their
+  gap from an empty column, not a large gap value.
 - Minimum tap target: `--tap: 44px` (buttons, burger, search field; 52px nav rows)
 
 ### Radii & shadows
