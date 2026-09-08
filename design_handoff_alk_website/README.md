@@ -34,7 +34,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 ### 2. Hero
 - **Background**: `var(--bg)` `#fafbfc` (page default).
 - **Padding**: `clamp(36px, 10.7vw, 96px)` top / `clamp(48px, 12.3vw, 110px)` bottom — 96/110 from ~900px up.
-- **Layout**: 2-column grid `1.15fr 0.85fr`, 64px gap, items `align-items: end`.
+- **Layout**: 12-column grid. Headline block spans cols 1–7, `.hero-card` spans cols 8–12, `align-items: end`.
 - **Left column**:
   - Eyebrow ("Regio Zwolle en omstreken") — 13px, `letter-spacing: 0.14em`, uppercase, `var(--accent-ink)` `#2d2c7b`, weight 600, 18px bottom margin.
   - H1 — Source Serif 4, 500, `clamp(30px, 5.4vw, 64px)`, line-height 1.08 (1.05 at ≥900px), balanced wrap. **Note:** this ramp caps at ~1185px, not 900px — in a 900px-wide frame it renders 48.6px, not 64px. Copy: *"Kinderfysiotherapie bij Aanhoudende Lichamelijke Klachten."*
@@ -44,7 +44,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 
 ### 3. Over ons (`#over-ons`)
 - Standard section background `var(--bg)`.
-- **Layout**: `.two-col` grid `1fr 1.4fr`, 72px gap. Left has eyebrow + H2; right has 2 paragraphs (18px body).
+- **Layout**: `.two-col` on the 12-column grid — `.label-col` spans cols 1–5, `.body-col` spans cols 7–12 (col 6 is left empty as the visual gap). Left has eyebrow + H2; right has 2 paragraphs. The body edge is the page's main spine (see *Layout grid*).
 - Below the two-column block: **`.audience` grid** — 2 cards side-by-side (1-up below 760px), 24px gap, `var(--block-gap)` top margin. Each `.aud-card` is white, `1px solid var(--rule)`, 10px radius, `clamp(24px, 5vw, 36px)` padding, with:
   - H3 "Voor kinderen & ouders" / "Voor verwijzers".
   - 1 paragraph.
@@ -74,7 +74,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
   - 02 "Gedeeld behandelprotocol"
   - 03 "Continue kennisuitwisseling"
   - 04 "Collegiale consultatie"
-- **`.lid-block`** below grid (20px top margin; 32px at ≥900px): white card, `1px solid var(--rule)`, 10px radius, `clamp(24px, 5vw, 48px)` padding. Inner grid `1.4fr 1fr` at ≥900px (stacked below), 56px gap, items center.
+- **`.lid-block`** below grid (20px top margin; 32px at ≥900px): white card, `1px solid var(--rule)`, 10px radius, `clamp(24px, 5vw, 48px)` padding. Inner grid `minmax(0, 1fr) var(--col5)` from **1180px** (stacked below), `48px` gap, items center. The split waits for 1180px because below that the aside cannot set "BIJEENKOMSTEN" — one unbreakable word — without clipping.
   - **Left** (`.lid-info`): muted eyebrow "Lidmaatschap", H3 "Aansluiten bij het netwerk" (`clamp(20px, 1.2vw + 17px, 24px)`), two paragraphs.
   - **Right** (`.lid-meta`): `repeat(3, minmax(0, 1fr))` from 600px, with a left border `1px solid var(--rule)` and 48px left padding from 900px. Each `.meta-item` has a big number (`Source Serif 4`, `clamp(28px, 2.6vw + 20px, 38px)`, `var(--brand-orange)` `#f58242`) and a 12px uppercase muted label. The tracks must be `minmax(0, 1fr)`, not `1fr` — in this narrow column plain `1fr` sizes to min-content and the three metrics come out unequal.
     - "€25 / Jaarlijkse contributie"
@@ -85,7 +85,7 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 ### 7. Vind een specialist (`#specialisten`)
 - **Background override**: `var(--bg-alt)` `#f1f3f6`.
 - `.two-col` intro ("21 kinderfysiotherapeuten in de regio.").
-- **`.map-shell`** below (`var(--block-gap)` top): grid `minmax(0, 1fr) 380px` and 640px tall from 900px; below that it stacks, with `#map` at `clamp(300px, 50dvh, 440px)` and the list capped at `70dvh`. White background, `1px solid var(--rule)`, 10px radius, `overflow: hidden`.
+- **`.map-shell`** below (`var(--block-gap)` top): grid `minmax(0, 1fr) var(--col5)` and 640px tall from 900px — the list lands on the same column line as the hero card; below that it stacks, with `#map` at `clamp(300px, 50dvh, 440px)` and the list capped at `70dvh`. White background, `1px solid var(--rule)`, 10px radius, `overflow: hidden`.
   - **Left**: `#map` — Leaflet container, 100% × 100%. Tile layer = **PDOK BRT-Achtergrondkaart** (`https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png`), attribution credits Kadaster + PDOK. Initial view fits all 21 marker bounds with `pad(0.18)` (`minZoom: 6`, `maxZoom: 19`). `scrollWheelZoom` is disabled by default and enabled on map click; disabled again on `mouseout`.
   - **Right**: `.specialist-list` — scrollable list, `border-left` from 900px and `border-top` below. Sticky top `.filter-bar` with a search input ("Zoek op naam of plaats…") and a 12px counter ("21 specialisten" / "N van 21 specialisten"). The input is 16px on phones — anything smaller makes iOS Safari zoom on focus — dropping to 14px at ≥900px. Below, one `.sp-item` per specialist (`14px 20px` padding, `16px 20px` at ≥900px, bottom border, hover `var(--bg-alt)`, active `var(--accent-soft)`):
     - `.sp-name` (15px weight 600)
@@ -114,6 +114,44 @@ This is a **single-page** site with a sticky top navigation that scrolls smoothl
 - Logo height 56px, 64px at ≥900px. Middle paragraph "© 2026 ALK Regio Zwolle en omstreken / Kennisnetwerk voor gespecialiseerde kinderfysiotherapie" (the line break is a literal `<br>`), then the attribution "Kaartdata © OpenStreetMap-bijdragers".
 - The middle paragraph sits where `space-between` puts it; it is *not* centred on the container, and forcing that would squeeze the attribution into a second line between 768px and ~1010px.
 
+## Layout grid
+Everything on desktop sits on **one 12-column grid**, engaged at 900px:
+
+```
+col  = (100% - 11 * var(--grid-gap)) / 12
+--grid-gap: 24px          /* the gutter, and the gap of every card row */
+--col5: calc((5 * 100% - 7 * var(--grid-gap)) / 12)
+```
+
+`--col5` is a 5-column span expressed as a width, for the two containers that
+cannot carry a grid gap: the map shell (its divider is flush) and the lid-block
+(a padded card, so its interior is its own context).
+
+At the 1180px container this gives 71px columns and these spans:
+
+| Block | Columns | Width |
+|---|---|---|
+| Intro label | 1–5 | 451 |
+| Intro body | 7–12 | 546 |
+| Hero headline | 1–7 | 641 |
+| Hero card / specialist list | 8–12 | 451 |
+| 2-up cards (audience, links) | 6 + 6 | 546 each |
+| 3-up cards (bps) | 4 + 4 + 4 | 356 each |
+| 4-up cards (werkwijze) | 3 × 4 | 261 each |
+
+The payoff is that the page has **two recurring vertical edges** instead of six
+competing ones: the intro body column at col 7, which is also the second card
+of any 2-up row and the third of a 4-up row; and the aside at col 8, shared by
+the hero card and the specialist list.
+
+**The one exception** is `.symptom-grid`, which stays 5-up. Twelve columns do
+not divide by five, and the long Dutch compounds ("Uitvalsverschijnselen")
+need the width — forcing it to 6-up would reintroduce the hyphenation the
+5-up layout exists to avoid.
+
+Card interiors are deliberately *not* page-grid-aligned: the page grid governs
+where cards sit, a card's own padding governs what is inside it.
+
 ## Responsive strategy
 The stylesheet is **mobile-first**: every base rule describes the narrowest
 viewport and each component is followed by the `min-width` queries that add to
@@ -127,8 +165,9 @@ Breakpoint ladder:
 | 480px | CTA buttons sit side by side instead of full-width |
 | 600px | werk-grid 2-up; lid-meta returns to three side-by-side metrics |
 | 760px | audience + links cards 2-up; symptom chips 3-up |
-| 900px | the design's own desktop switch — two-col grids, bps 3-up, werk-grid 4-up, lid-block split, map beside the list, inline nav, tall header |
+| 900px | the design's own desktop switch — **the 12-column grid engages**: two-col grids, bps 3-up, werk-grid 4-up, map beside the list, inline nav, tall header |
 | 1000px | symptom chips 5-up (the handoff layout) |
+| 1180px | lid-block splits into info + metrics (waits for the container's max-width so the metric labels don't clip) |
 
 Block-level vertical gaps are **not** on this ladder — they ramp fluidly via
 `--block-gap` (see Spacing), so every section's intro→block gap is identical at
@@ -223,13 +262,24 @@ to a 900px-wide frame, expect 48.6px.
 - Section vertical padding: `clamp(56px, 10.7vw, 96px)`
 - Hero vertical padding: `clamp(36px, 10.7vw, 96px)` top / `clamp(48px, 12.3vw, 110px)` bottom
 - Container max-width: **1180px**, side-padding `clamp(20px, 3.6vw, 32px)`
-- Card padding: `clamp(…)` ramps bottoming out around 20–24px on phones
-  (hero/bps/link 32px, audience 36px, werk 28px, lid-block 48px at desktop)
+- Card padding is a scale keyed to how many columns the card spans:
+
+  | Token | Desktop | Used by |
+  |---|---|---|
+  | `--pad-sm` | 20px | symptom chips |
+  | `var(--grid-gap)` | 24px | 3-column werk cards (the narrowest) |
+  | `--pad-md` | 32px | hero, audience, bps, link cards |
+  | `--pad-lg` | 48px | lid-block (the full-width feature panel) |
+
+  Each is a `clamp()` bottoming out at 14–24px on phones.
 - Intro→block gap: `--block-gap: clamp(32px, 4.5vw, 40px)`, shared by
   `.audience`, `.bps`, `.werk-grid`, `.links-grid` and `.map-shell`. The chip
   grid is the one deliberate exception at `clamp(28px, 4vw, 36px)`, because it
   measures an eyebrow→chips gap rather than intro→block.
-- Grid gaps: 10–12px (chips) / 16–24px (cards) / 24–72px (two-col)
+- Gap scale: **4 / 8 / 12 / 16 / 24 / 32 / 48**. 4px is a hairline for
+  label+source pairs; 24px is the grid gutter and the gap of every card row.
+  Asymmetric splits get their visual gap from an *empty column*, not a large
+  gap value — which is why nothing above 48px remains.
 - Minimum tap target: `--tap: 44px` (buttons, burger, search field; 52px nav rows)
 
 ### Radii & shadows

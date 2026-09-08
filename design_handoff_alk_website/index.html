@@ -52,6 +52,17 @@
         --section-y: clamp(56px, 10.7vw, 96px);
         /* gap from a section's intro to the block below it */
         --block-gap: clamp(32px, 4.5vw, 40px);
+        /* 12-column grid, engaged at 900px. Every desktop split spans whole
+           columns so the page has one set of vertical edges.
+           col = (100% - 11 * --grid-gap) / 12 */
+        --grid-gap: 24px;
+        /* 5 of 12 columns, for containers that cannot carry a gap
+           (the map shell's flush divider) or that are card-internal */
+        --col5: calc((5 * 100% - 7 * var(--grid-gap)) / 12);
+        /* card padding scale: chip / standard / feature */
+        --pad-sm: clamp(14px, 3vw, 20px);
+        --pad-md: clamp(20px, 4.5vw, 32px);
+        --pad-lg: clamp(24px, 5vw, 48px);
         --tap: 44px;
       }
       * {
@@ -201,7 +212,7 @@
       .brand {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
         color: var(--ink);
         text-decoration: none;
         white-space: nowrap;
@@ -348,7 +359,7 @@
         }
         .site-nav ul {
           flex-direction: row;
-          gap: calc(36px - 6px * var(--shrink));
+          gap: calc(32px - 8px * var(--shrink));
           padding: 0;
         }
         .site-nav a {
@@ -374,7 +385,7 @@
       .hero-grid {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: 36px;
+        gap: 32px;
       }
       .hero h1 {
         margin-bottom: 20px;
@@ -389,7 +400,7 @@
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
-        padding: clamp(22px, 5vw, 32px);
+        padding: var(--pad-md);
       }
       .hero-card h3 {
         margin-bottom: 14px;
@@ -405,9 +416,15 @@
       }
       @media (min-width: 900px) {
         .hero-grid {
-          grid-template-columns: 1.15fr 0.85fr;
-          gap: 64px;
+          grid-template-columns: repeat(12, minmax(0, 1fr));
+          gap: var(--grid-gap);
           align-items: end;
+        }
+        .hero-grid > :first-child {
+          grid-column: 1 / span 7;
+        }
+        .hero-card {
+          grid-column: 8 / span 5;
         }
         .hero h1 {
           margin-bottom: 24px;
@@ -471,7 +488,7 @@
           flex-direction: row;
           align-items: center;
           flex-wrap: wrap;
-          gap: 14px;
+          gap: 16px;
           margin-top: 32px;
         }
       }
@@ -496,9 +513,15 @@
       }
       @media (min-width: 900px) {
         .two-col {
-          grid-template-columns: 1fr 1.4fr;
-          gap: 72px;
+          grid-template-columns: repeat(12, minmax(0, 1fr));
+          gap: var(--grid-gap);
           align-items: start;
+        }
+        .two-col .label-col {
+          grid-column: 1 / span 5;
+        }
+        .two-col .body-col {
+          grid-column: 7 / span 6;
         }
       }
 
@@ -513,7 +536,7 @@
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
-        padding: clamp(24px, 5vw, 36px);
+        padding: var(--pad-md);
       }
       .aud-card .tag {
         display: inline-block;
@@ -536,7 +559,7 @@
       @media (min-width: 760px) {
         .audience {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 24px;
+          gap: var(--grid-gap);
         }
       }
 
@@ -544,14 +567,14 @@
       .symptom-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+        gap: 12px;
         margin-top: clamp(28px, 4vw, 36px);
       }
       .symptom {
         background: var(--bg-card);
         border: 1px solid var(--rule-cool);
         border-radius: var(--radius);
-        padding: clamp(14px, 3vw, 22px) clamp(8px, 2.2vw, 18px);
+        padding: var(--pad-sm);
         text-align: center;
         font-size: clamp(14px, 0.4vw + 13px, 15px);
         color: var(--ink);
@@ -563,6 +586,11 @@
         .symptom-grid {
           grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 12px;
+        }
+      }
+      @media (min-width: 900px) {
+        .symptom-grid {
+          gap: var(--grid-gap);
         }
       }
       @media (min-width: 1000px) {
@@ -585,7 +613,7 @@
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
-        padding: clamp(22px, 4.5vw, 32px);
+        padding: var(--pad-md);
         position: relative;
         border-top: 3px solid var(--bps-accent, var(--accent));
       }
@@ -617,7 +645,7 @@
       @media (min-width: 900px) {
         .bps {
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 20px;
+          gap: var(--grid-gap);
         }
       }
 
@@ -632,7 +660,7 @@
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
-        padding: clamp(22px, 4.5vw, 28px);
+        padding: var(--grid-gap);
       }
       .werk-card .num {
         font-family: "Source Serif 4", serif;
@@ -654,12 +682,13 @@
       @media (min-width: 600px) {
         .werk-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 20px;
+          gap: 16px;
         }
       }
       @media (min-width: 900px) {
         .werk-grid {
           grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: var(--grid-gap);
         }
       }
 
@@ -669,10 +698,10 @@
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
-        padding: clamp(24px, 5vw, 48px);
+        padding: var(--pad-lg);
         display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: 28px;
+        gap: 24px;
       }
       .lid-info h3 {
         font-size: clamp(20px, 1.2vw + 17px, 24px);
@@ -717,7 +746,7 @@
       @media (min-width: 600px) {
         .lid-meta {
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 20px;
+          gap: var(--grid-gap);
         }
         .meta-item {
           display: block;
@@ -730,15 +759,23 @@
       @media (min-width: 900px) {
         .lid-block {
           margin-top: 32px;
-          grid-template-columns: 1.4fr 1fr;
-          gap: 56px;
+        }
+      }
+
+      /* the lid-block only splits once the viewport reaches --maxw, which is
+         where the aside is finally wide enough to set "BIJEENKOMSTEN" without
+         clipping (the label is one unbreakable word) */
+      @media (min-width: 1180px) {
+        .lid-block {
+          grid-template-columns: minmax(0, 1fr) var(--col5);
+          gap: calc(var(--grid-gap) * 2);
           align-items: center;
         }
         .lid-meta {
           border-top: 0;
           padding-top: 0;
           border-left: 1px solid var(--rule);
-          padding-left: 48px;
+          padding-left: var(--grid-gap);
         }
       }
 
@@ -907,7 +944,7 @@
       }
       @media (min-width: 900px) {
         .map-shell {
-          grid-template-columns: minmax(0, 1fr) 380px;
+          grid-template-columns: minmax(0, 1fr) var(--col5);
           height: 640px;
         }
         #map {
@@ -977,7 +1014,7 @@
         margin-top: var(--block-gap);
       }
       .link-card {
-        --card-pad: clamp(20px, 4.5vw, 32px);
+        --card-pad: var(--pad-md);
         background: var(--bg-card);
         border: 1px solid var(--rule);
         border-radius: var(--radius);
@@ -1035,7 +1072,7 @@
       @media (min-width: 760px) {
         .links-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 24px;
+          gap: var(--grid-gap);
         }
       }
 
